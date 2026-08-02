@@ -44,3 +44,6 @@ tmp/
 *.p12
 credentials*.json
 service-account*.json
+
+# GUI 测试截图（本地评审产物）
+gui-test-screenshots/
