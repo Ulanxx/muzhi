@@ -49,7 +49,7 @@ export default async function OrdersPage() {
             <section className="surface p-7">
               <h2 className="text-xl font-semibold">还没有订单</h2>
               <Link
-                className="mt-3 inline-block text-[var(--accent)]"
+                className="mt-3 inline-block text-[var(--accent-readable)]"
                 href="/pricing"
               >
                 前往价格页 →
@@ -81,7 +81,7 @@ export default async function OrdersPage() {
                     <p className="text-xl font-semibold">
                       {formatPrice(order.amountInMinorUnits)}
                     </p>
-                    <p className="mt-1 font-mono text-xs text-[var(--accent)]">
+                    <p className="mt-1 font-mono text-xs text-[var(--accent-readable)]">
                       {order.status} / {order.fulfillmentStatus}
                     </p>
                   </div>

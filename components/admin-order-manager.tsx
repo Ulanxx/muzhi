@@ -65,7 +65,7 @@ export function AdminOrderManager() {
     <section className="mt-12">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <p className="font-mono text-xs text-[var(--accent)]">COMMERCE</p>
+          <p className="font-mono text-xs text-[var(--accent-readable)]">COMMERCE</p>
           <h2 className="mt-2 text-3xl font-semibold tracking-[-0.04em]">
             订单与权益发放
           </h2>
@@ -100,7 +100,7 @@ export function AdminOrderManager() {
                   ¥{(order.amountInMinorUnits / 100).toFixed(2)} ·{" "}
                   {order.provider}/{order.paymentMethod}
                 </p>
-                <p className="mt-1 font-mono text-xs text-[var(--accent)]">
+                <p className="mt-1 font-mono text-xs text-[var(--accent-readable)]">
                   {order.status} / {order.fulfillmentStatus}
                 </p>
                 {order.lastError ? (

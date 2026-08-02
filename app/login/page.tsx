@@ -21,13 +21,13 @@ export default function LoginPage() {
             <LoginForm />
           </Suspense>
           <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm">
-            <Link className="text-[var(--accent)]" href="/register">
+            <Link className="font-semibold text-[var(--accent-readable)] underline underline-offset-4" href="/register">
               注册账号
             </Link>
-            <Link className="text-[var(--accent)]" href="/forgot-password">
+            <Link className="font-semibold text-[var(--accent-readable)] underline underline-offset-4" href="/forgot-password">
               找回密码
             </Link>
-            <Link className="text-[var(--accent)]" href="/resend-verification">
+            <Link className="font-semibold text-[var(--accent-readable)] underline underline-offset-4" href="/resend-verification">
               重发验证邮件
             </Link>
           </div>

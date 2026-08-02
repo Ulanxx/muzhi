@@ -165,7 +165,7 @@ export function CheckoutPanel({
             onClick={() => setSelectedProduct(product.id)}
             type="button"
           >
-            <span className="font-mono text-xs text-[var(--accent)]">
+            <span className="font-mono text-xs text-[var(--accent-readable)]">
               {product.entitlementType}
             </span>
             <span className="mt-3 block text-2xl font-semibold">
@@ -182,7 +182,7 @@ export function CheckoutPanel({
       </section>
 
       <aside className="surface h-fit p-7">
-        <p className="font-mono text-xs text-[var(--accent)]">CHECKOUT</p>
+        <p className="font-mono text-xs text-[var(--accent-readable)]">CHECKOUT</p>
         <h2 className="mt-3 text-2xl font-semibold">
           {selected?.title ?? "选择商品"}
         </h2>
@@ -274,7 +274,7 @@ export function CheckoutPanel({
             ) : null}
 
             <Link
-              className="mt-4 block text-sm font-semibold text-[var(--accent)]"
+              className="mt-4 block text-sm font-semibold text-[var(--accent-readable)]"
               href="/account/orders"
             >
               查看我的订单 →

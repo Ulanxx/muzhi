@@ -118,7 +118,7 @@ export function AdminOperationsPanel() {
     <section className="mt-10" aria-labelledby="operations-title">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <p className="font-mono text-xs text-[var(--accent)]">OPERATIONS</p>
+          <p className="font-mono text-xs text-[var(--accent-readable)]">OPERATIONS</p>
           <h2
             className="mt-2 text-3xl font-semibold tracking-[-0.04em]"
             id="operations-title"
@@ -215,7 +215,7 @@ export function AdminOperationsPanel() {
               key={failure.id}
             >
               <div>
-                <p className="font-mono text-xs text-[var(--accent)]">
+                <p className="font-mono text-xs text-[var(--accent-readable)]">
                   {failure.category} · {failure.severity} · {failure.code}
                 </p>
                 <p className="mt-2 font-semibold">{failure.summary}</p>

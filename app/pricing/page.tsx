@@ -22,15 +22,15 @@ export default async function PricingPage() {
   return (
     <>
       <SiteHeader site={site} />
-      <main className="page-shell py-16">
-        <p className="font-mono text-xs text-[var(--accent)]">
+      <main className="page-shell py-16 lg:py-20">
+        <p className="eyebrow text-[var(--muted)]">
           {provider.name.toUpperCase()} PAYMENT
         </p>
-        <h1 className="mt-3 text-5xl font-semibold tracking-[-0.05em]">
-          选择你的权益
+        <h1 className="headline mt-6 text-[clamp(3rem,9vw,7rem)]">
+          两种买法
         </h1>
-        <p className="mt-5 max-w-2xl text-lg leading-8 text-[var(--muted)]">
-          全站会员和单课购买共用同一套订单、支付事件与权益发放流程。
+        <p className="mt-8 max-w-[38rem] border-t-2 border-[var(--rule)] pt-6 text-xl leading-9">
+          按年订阅解锁全部内容，或者只买你想看的那一门。买了就是你的。
         </p>
 
         <CheckoutPanel

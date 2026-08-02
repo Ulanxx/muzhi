@@ -32,7 +32,7 @@ export default async function AdminPage() {
     <>
       <SiteHeader site={site} />
       <main className="page-shell py-12">
-        <p className="font-mono text-xs text-[var(--accent)]">ADMIN</p>
+        <p className="font-mono text-xs text-[var(--accent-readable)]">ADMIN</p>
         <h1 className="mt-3 text-4xl font-semibold tracking-[-0.045em]">
           课程交付后台
         </h1>

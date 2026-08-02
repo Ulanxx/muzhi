@@ -61,7 +61,7 @@ export default async function LearnPage({
 
         <div className="mt-6 grid gap-10 lg:grid-cols-[1fr_20rem]">
           <article>
-            <p className="font-mono text-xs text-[var(--accent)]">
+            <p className="font-mono text-xs text-[var(--accent-readable)]">
               {series?.title ?? "课程"}
             </p>
             <h1 className="mt-3 text-4xl font-semibold tracking-[-0.045em] sm:text-5xl">

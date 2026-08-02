@@ -17,6 +17,14 @@ export const metadata: Metadata = {
   title: "课程",
 };
 
+const accessLabel: Record<string, string> = {
+  public: "免费试看",
+  registered: "登录可看",
+  member: "会员专享",
+  course: "单课购买",
+  series: "系列购买",
+};
+
 export default async function CoursesPage() {
   const site = getSiteConfig();
   let series: Array<SeriesRecord & { _id: Types.ObjectId }> = [];
@@ -45,50 +53,61 @@ export default async function CoursesPage() {
   return (
     <>
       <SiteHeader site={site} />
-      <main className="page-shell py-16">
-        <div className="max-w-3xl">
-          <h1 className="text-5xl font-semibold tracking-[-0.05em]">课程</h1>
-          <p className="mt-5 text-lg leading-8 text-[var(--muted)]">
-            从公开内容开始，再按会员或单课权益继续学习。
-          </p>
-        </div>
+      <main className="page-shell py-16 lg:py-20">
+        <p className="eyebrow text-[var(--muted)]">全部内容</p>
+        <h1 className="headline mt-6 text-[clamp(3rem,9vw,7rem)]">课程</h1>
+        <p className="mt-8 max-w-[38rem] border-t-2 border-[var(--rule)] pt-6 text-xl leading-9">
+          先从免费内容看起，需要时再用会员或单课解锁后面的部分。
+        </p>
 
         {entries.length === 0 ? (
-          <section className="surface mt-10 p-8">
-            <h2 className="text-xl font-semibold">还没有已发布课程</h2>
-            <p className="mt-2 text-[var(--muted)]">
-              运行 `npm run seed-demo` 创建虚构示例内容。
-            </p>
-          </section>
+          <p className="mt-16 border-t border-[var(--line)] pt-8 text-lg text-[var(--muted)]">
+            还没有已发布课程。运行 `npm run seed-demo` 可创建示例内容。
+          </p>
         ) : (
-          <div className="mt-12 space-y-10">
-            {entries.map(({ series: item, courses }) => (
-              <section className="surface p-6 sm:p-8" key={item._id.toString()}>
-                <h2 className="text-3xl font-semibold tracking-[-0.035em]">
-                  {item.title}
-                </h2>
-                <p className="mt-3 max-w-3xl leading-7 text-[var(--muted)]">
-                  {item.description}
-                </p>
-                <div className="mt-7 grid gap-3">
-                  {courses.map((course) => (
-                    <Link
-                      className="focus-ring grid gap-2 rounded-xl border border-[var(--line)] bg-[var(--page)] p-5 transition-transform hover:-translate-y-0.5 sm:grid-cols-[1fr_auto] sm:items-center"
-                      href={`/learn/${course._id.toString()}`}
-                      key={course._id.toString()}
-                    >
-                      <span>
-                        <span className="font-semibold">{course.title}</span>
-                        <span className="mt-1 block text-sm text-[var(--muted)]">
-                          {course.summary}
-                        </span>
-                      </span>
-                      <span className="font-mono text-xs text-[var(--accent)]">
-                        {course.accessLevel}
-                      </span>
-                    </Link>
-                  ))}
+          <div className="mt-16 space-y-20">
+            {entries.map(({ series: item, courses }, seriesIndex) => (
+              <section key={item._id.toString()}>
+                <div className="flex items-baseline gap-6">
+                  <span className="eyebrow text-[var(--muted)]">
+                    {String(seriesIndex + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <h2 className="text-4xl font-black tracking-[-0.03em] sm:text-5xl">
+                      {item.title}
+                    </h2>
+                    <p className="mt-4 max-w-[42rem] leading-7 text-[var(--muted)]">
+                      {item.description}
+                    </p>
+                  </div>
                 </div>
+
+                <ol className="mt-10">
+                  {courses.map((course, index) => (
+                    <li key={course._id.toString()}>
+                      <Link
+                        className="focus-ring group grid gap-4 border-t border-[var(--line)] py-7 transition-colors hover:bg-[var(--surface)] sm:grid-cols-[4rem_1fr_auto] sm:items-baseline sm:gap-8"
+                        href={`/learn/${course._id.toString()}`}
+                      >
+                        <span className="font-mono text-2xl font-black text-[var(--muted)] tabular-nums">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                        <span>
+                          <span className="block text-xl font-bold tracking-[-0.02em] group-hover:underline sm:text-2xl">
+                            {course.title}
+                          </span>
+                          <span className="mt-2 block max-w-[42rem] leading-7 text-[var(--muted)]">
+                            {course.summary}
+                          </span>
+                        </span>
+                        <span className="eyebrow whitespace-nowrap bg-[var(--accent)] px-2.5 py-1.5 text-[var(--accent-ink)]">
+                          {accessLabel[course.accessLevel] ??
+                            course.accessLevel}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ol>
               </section>
             ))}
           </div>

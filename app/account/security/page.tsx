@@ -19,7 +19,7 @@ export default async function AccountSecurityPage() {
       <SiteHeader site={site} />
       <main className="page-shell py-16">
         <div className="mx-auto max-w-md">
-          <p className="font-mono text-xs text-[var(--accent)]">{user.email}</p>
+          <p className="font-mono text-xs text-[var(--accent-readable)]">{user.email}</p>
           <h1 className="mt-3 text-4xl font-semibold tracking-[-0.045em]">
             账号安全
           </h1>

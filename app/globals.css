@@ -1,76 +1,95 @@
 @import "tailwindcss";
 
+/* 杂志编辑部：纸感底、墨色字、单一荧光强调色。
+   刻意不跟随系统深色模式——印刷品没有深色版。 */
 :root {
-  color-scheme: light dark;
-  --page: #f5f7f9;
-  --surface: #fbfcfd;
-  --surface-strong: #e9eef3;
-  --ink: #17202a;
-  --muted: #5b6773;
-  --line: #ced7df;
-  --accent: #315fc4;
-  --accent-strong: #23489a;
-  --accent-ink: #f7f9ff;
+  color-scheme: light;
+  --page: #faf8f4;
+  --surface: #ffffff;
+  --surface-strong: #f0ece4;
+  --ink: #0b0b0b;
+  --muted: #6b6862;
+  --line: #ddd8cd;
+  --rule: #0b0b0b;
+  --accent: #d8ff3e;
+  --accent-strong: #c4eb1f;
+  --accent-ink: #0b0b0b;
+  /* 荧光绿只能做背景。文字要用这个能读的深橄榄色。 */
+  --accent-readable: #4a5800;
   --success: #1f7554;
-  --shadow: rgba(38, 59, 79, 0.12);
+  --shadow: rgba(11, 11, 11, 0.08);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --page: #10151b;
-    --surface: #161d25;
-    --surface-strong: #202a35;
-    --ink: #edf2f6;
-    --muted: #aab6c2;
-    --line: #34414d;
-    --accent: #85a8f4;
-    --accent-strong: #a9c2fb;
-    --accent-ink: #111823;
-    --success: #72c8a7;
-    --shadow: rgba(1, 8, 14, 0.35);
+/* 基础元素样式必须放进 @layer base：无 layer 的 CSS 会压过 Tailwind
+   的 @layer utilities，导致 text-[...] 之类的工具类对 <a> 全部失效。 */
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-height: 100dvh;
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font-family: var(--font-geist-sans), "PingFang SC", "Hiragino Sans GB",
+      "Microsoft YaHei", system-ui, sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--ink);
   }
 }
 
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  min-height: 100dvh;
-  margin: 0;
-  background: var(--page);
-  color: var(--ink);
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
-  text-rendering: optimizeLegibility;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-::selection {
-  background: color-mix(in srgb, var(--accent) 24%, transparent);
-}
-
 .page-shell {
-  width: min(100% - 2rem, 88rem);
+  width: min(100% - 2.5rem, 82rem);
   margin-inline: auto;
+}
+
+/* 编辑式排版：超大标题、紧行距、收紧字距 */
+.headline {
+  font-weight: 900;
+  line-height: 0.86;
+  letter-spacing: -0.04em;
+}
+
+/* 栏目编号、小标签这类「印刷家具」 */
+.eyebrow {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* 杂志分隔线：粗黑线而非灰色圆角卡片 */
+.rule-top {
+  border-top: 2px solid var(--rule);
+}
+
+.hairline-top {
+  border-top: 1px solid var(--line);
 }
 
 .surface {
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 1rem;
-  box-shadow: 0 1.25rem 3rem var(--shadow);
 }
 
 .focus-ring:focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  outline: 3px solid var(--ink);
   outline-offset: 3px;
 }
 

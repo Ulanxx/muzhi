@@ -18,7 +18,7 @@ export default function RegisterPage() {
           <RegisterForm />
           <p className="mt-5 text-sm text-[var(--muted)]">
             已有账号？{" "}
-            <Link className="text-[var(--accent)]" href="/login">
+            <Link className="font-semibold text-[var(--accent-readable)] underline underline-offset-4" href="/login">
               返回登录
             </Link>
           </p>
