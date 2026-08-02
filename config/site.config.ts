@@ -6,11 +6,11 @@ export function getSiteConfig(): SiteConfig {
 
   return {
     name: env.APP_NAME,
-    description: "面向个人创作者的自托管知识产品交付与会员运营底座。",
+    description: "牧之的知识产品交付站：课程、会员与单课购买的一体化底座。",
     url: env.APP_URL,
     locale: "zh-CN",
     creator: {
-      name: "Demo Creator",
+      name: "牧之",
       supportEmail: "support@example.com",
     },
   };

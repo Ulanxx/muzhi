@@ -39,13 +39,13 @@ function emailCopy(message: IdentityEmail): {
 } {
   if (message.kind === "verify_email") {
     return {
-      subject: "验证你的 mdldm Knowledge Kit 邮箱",
+      subject: "验证你的 牧之知识产品 邮箱",
       text: `${message.recipientName}，你好：\n\n请打开下面的链接完成邮箱验证。链接仅在限定时间内有效：\n${message.actionUrl}\n\n如果不是你发起的注册，请忽略此邮件。`,
     };
   }
 
   return {
-    subject: "重置你的 mdldm Knowledge Kit 密码",
+    subject: "重置你的 牧之知识产品 密码",
     text: `${message.recipientName}，你好：\n\n请打开下面的链接设置新密码。链接只能使用一次：\n${message.actionUrl}\n\n如果不是你发起的操作，请忽略此邮件并保留原密码。`,
   };
 }

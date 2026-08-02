@@ -30,7 +30,7 @@ export function VideoPlayer({
     }
     const player: HTMLVideoElement = currentPlayer;
 
-    const localKey = `mdldm-progress:${courseId}`;
+    const localKey = `muzhi-progress:${courseId}`;
 
     async function loadProgress() {
       let saved: SavedProgress | null = null;

@@ -35,7 +35,7 @@ describe("operations observability", () => {
 
   it("signs webhook payloads with timestamp-bound HMAC SHA-256", () => {
     const timestamp = "1784880000";
-    const body = '{"type":"mdldm.operation_failure"}';
+    const body = '{"type":"muzhi.operation_failure"}';
     const secret = "test-webhook-secret";
     const expected = createHmac("sha256", secret)
       .update(`${timestamp}.${body}`)
@@ -61,7 +61,7 @@ describe("operations observability", () => {
       },
     );
     const reporter = new WebhookErrorReporter({
-      url: "https://alerts.example.com/mdldm",
+      url: "https://alerts.example.com/muzhi",
       secret: "test-webhook-secret",
       fetcher: fetcher as typeof fetch,
     });
@@ -81,13 +81,13 @@ describe("operations observability", () => {
 
     expect(fetcher).toHaveBeenCalledOnce();
     const [{ url, request }] = calls;
-    expect(url).toBe("https://alerts.example.com/mdldm");
+    expect(url).toBe("https://alerts.example.com/muzhi");
     expect(request?.method).toBe("POST");
     expect(request?.headers).toMatchObject({
-      "X-MDLDm-Timestamp": expect.any(String),
-      "X-MDLDm-Signature": expect.stringMatching(/^sha256=[a-f0-9]{64}$/),
+      "X-Muzhi-Timestamp": expect.any(String),
+      "X-Muzhi-Signature": expect.stringMatching(/^sha256=[a-f0-9]{64}$/),
     });
-    expect(request?.body).toContain('"type":"mdldm.operation_failure"');
+    expect(request?.body).toContain('"type":"muzhi.operation_failure"');
     expect(request?.body).not.toContain("test-webhook-secret");
   });
 });

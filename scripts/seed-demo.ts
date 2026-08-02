@@ -106,7 +106,7 @@ async function main() {
   if (!videoAsset || !(await storage.exists(videoObjectKey))) {
     const temporaryVideo = path.join(
       os.tmpdir(),
-      `mdldm-demo-${process.pid}.mp4`,
+      `muzhi-demo-${process.pid}.mp4`,
     );
     const ffmpeg = spawnSync(
       "ffmpeg",
@@ -168,7 +168,7 @@ async function main() {
 
   const materialObjectKey = "demo/public-introduction-notes.txt";
   const materialContent = new TextEncoder().encode(
-    "mdldm Knowledge Kit Demo\n\n这是一份完全虚构的课程资料，用于验证安全下载链路。\n",
+    "牧之知识产品 Demo\n\n这是一份完全虚构的课程资料，用于验证安全下载链路。\n",
   );
   if (!(await storage.exists(materialObjectKey))) {
     await storage.put(materialObjectKey, materialContent, {

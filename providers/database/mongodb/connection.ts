@@ -9,15 +9,15 @@ interface MongooseCache {
 }
 
 declare global {
-  var mdldmMongooseCache: MongooseCache | undefined;
+  var muzhiMongooseCache: MongooseCache | undefined;
 }
 
-const cache: MongooseCache = global.mdldmMongooseCache ?? {
+const cache: MongooseCache = global.muzhiMongooseCache ?? {
   connection: null,
   promise: null,
 };
 
-global.mdldmMongooseCache = cache;
+global.muzhiMongooseCache = cache;
 
 export async function connectMongo(): Promise<typeof mongoose> {
   if (cache.connection) {

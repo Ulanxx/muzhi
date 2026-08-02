@@ -8,15 +8,15 @@ import {
 
 describe("invitation codes", () => {
   it("normalizes codes before hashing", () => {
-    expect(normalizeInvitationCode(" mdldm-demo ")).toBe("MDLDM-DEMO");
-    expect(hashInvitationCode("mdldm-demo", "secret")).toBe(
-      hashInvitationCode(" MDLDM-DEMO ", "secret"),
+    expect(normalizeInvitationCode(" muzhi-demo ")).toBe("MUZHI-DEMO");
+    expect(hashInvitationCode("muzhi-demo", "secret")).toBe(
+      hashInvitationCode(" MUZHI-DEMO ", "secret"),
     );
   });
 
   it("only exposes a short hint", () => {
-    expect(invitationCodeHint("MDLDM-ABCDEFGHIJKL")).toBe(
-      "MDLDM-AB…IJKL",
+    expect(invitationCodeHint("MUZHI-ABCDEFGHIJKL")).toBe(
+      "MUZHI-AB…IJKL",
     );
   });
 });

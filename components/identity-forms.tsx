@@ -328,7 +328,7 @@ export function RedeemInvitationForm() {
           autoComplete="off"
           className={inputClass}
           name="code"
-          placeholder="MDLDM-..."
+          placeholder="MUZHI-..."
           required
         />
       </label>

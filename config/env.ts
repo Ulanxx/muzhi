@@ -24,16 +24,16 @@ const envSchema = z
       .enum(["development", "test", "production"])
       .default("development"),
     APP_URL: z.string().url().default("http://localhost:3000"),
-    APP_NAME: z.string().min(1).default("mdldm Knowledge Kit"),
+    APP_NAME: z.string().min(1).default("牧之知识产品"),
     MONGODB_URI: z
       .string()
       .min(1)
-      .default("mongodb://localhost:27017/mdldm_knowledge_kit"),
+      .default("mongodb://localhost:27017/muzhi_knowledge"),
     AUTH_SECRET: z.string().optional(),
     SESSION_COOKIE_NAME: z
       .string()
       .regex(/^[a-zA-Z0-9_-]+$/)
-      .default("mdldm_session"),
+      .default("muzhi_session"),
     SESSION_TTL_DAYS: z.coerce.number().int().min(1).max(90).default(30),
     EMAIL_VERIFICATION_TTL_HOURS: z.coerce
       .number()

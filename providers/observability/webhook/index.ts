@@ -29,7 +29,7 @@ export class WebhookErrorReporter implements ErrorReporter {
   async report(event: ErrorReport): Promise<void> {
     const timestamp = Math.floor(Date.now() / 1_000).toString();
     const body = JSON.stringify({
-      type: "mdldm.operation_failure",
+      type: "muzhi.operation_failure",
       version: "1",
       event,
     });
@@ -37,9 +37,9 @@ export class WebhookErrorReporter implements ErrorReporter {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "User-Agent": "mdldm-knowledge-kit/observability",
-        "X-MDLDm-Timestamp": timestamp,
-        "X-MDLDm-Signature": signObservabilityWebhook(
+        "User-Agent": "muzhi-knowledge/observability",
+        "X-Muzhi-Timestamp": timestamp,
+        "X-Muzhi-Signature": signObservabilityWebhook(
           timestamp,
           body,
           this.options.secret,

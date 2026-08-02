@@ -40,7 +40,7 @@ describe("environment configuration", () => {
       NODE_ENV: "production",
       APP_URL: "https://courses.example.com",
       MONGODB_URI:
-        "mongodb+srv://demo.invalid.example/mdldm_knowledge_kit",
+        "mongodb+srv://demo.invalid.example/muzhi_knowledge",
       AUTH_SECRET: "a-secure-production-value-with-more-than-32-characters",
       PAYMENT_PROVIDER: "manual",
     });
@@ -90,7 +90,7 @@ describe("environment configuration", () => {
     const env = parseEnv({
       NODE_ENV: "development",
       OBSERVABILITY_PROVIDER: "webhook",
-      OBSERVABILITY_WEBHOOK_URL: "https://alerts.example.com/mdldm",
+      OBSERVABILITY_WEBHOOK_URL: "https://alerts.example.com/muzhi",
       OBSERVABILITY_WEBHOOK_SECRET: "a-test-secret-with-enough-length",
     });
     expect(env.OBSERVABILITY_PROVIDER).toBe("webhook");
@@ -105,7 +105,7 @@ describe("environment configuration", () => {
           "a-secure-production-value-with-more-than-32-characters",
         PAYMENT_PROVIDER: "manual",
         OBSERVABILITY_PROVIDER: "webhook",
-        OBSERVABILITY_WEBHOOK_URL: "http://alerts.example.com/mdldm",
+        OBSERVABILITY_WEBHOOK_URL: "http://alerts.example.com/muzhi",
         OBSERVABILITY_WEBHOOK_SECRET: "a-test-secret-with-enough-length",
       }),
     ).toThrow(/OBSERVABILITY_WEBHOOK_URL 必须使用 HTTPS/);

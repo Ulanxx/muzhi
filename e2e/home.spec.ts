@@ -61,7 +61,7 @@ test("shows operational metrics, failure queue and protected data export", async
 
   const database = await createConnection(
     process.env.MONGODB_URI ??
-      "mongodb://127.0.0.1:27017/mdldm_knowledge_kit",
+      "mongodb://127.0.0.1:27017/muzhi_knowledge",
   ).asPromise();
   const suffix = Date.now().toString(36);
   const failureId = await reportOperationalFailure({
@@ -112,7 +112,7 @@ test("shows operational metrics, failure queue and protected data export", async
   const exported = await page.request.get("/api/admin/export");
   expect(exported.ok()).toBe(true);
   expect(exported.headers()["content-disposition"]).toContain(
-    "mdldm-admin-export",
+    "muzhi-admin-export",
   );
   const exportBody = await exported.text();
   expect(exportBody).toContain('"schemaVersion": "1"');
@@ -399,7 +399,7 @@ test("enforces verified identity, invitation entitlement and password rotation",
     "playwright-local-secret-value-with-more-than-32-characters";
   const database = await createConnection(
     process.env.MONGODB_URI ??
-      "mongodb://127.0.0.1:27017/mdldm_knowledge_kit",
+      "mongodb://127.0.0.1:27017/muzhi_knowledge",
   ).asPromise();
   const users = database.collection("users");
   const identityTokens = database.collection("identitytokens");
@@ -451,7 +451,7 @@ test("enforces verified identity, invitation entitlement and password rotation",
     ).status(),
   ).toBe(403);
 
-  const invitationCode = `MDLDM-E2E-${suffix}`;
+  const invitationCode = `MUZHI-E2E-${suffix}`;
   const admin = await users.findOne({ role: "admin", status: "active" });
   expect(admin).not.toBeNull();
   await invitations.insertOne({
@@ -459,7 +459,7 @@ test("enforces verified identity, invitation entitlement and password rotation",
       invitationCode,
       e2eSecret,
     ),
-    codeHint: "MDLDM-E2E…TEST",
+    codeHint: "MUZHI-E2E…TEST",
     entitlementType: "course",
     targetId: course.course.id,
     durationDays: null,
@@ -594,7 +594,7 @@ test("creates server-priced mock orders and grants both payment entitlement mode
 
   const database = await createConnection(
     process.env.MONGODB_URI ??
-      "mongodb://127.0.0.1:27017/mdldm_knowledge_kit",
+      "mongodb://127.0.0.1:27017/muzhi_knowledge",
   ).asPromise();
   await database.collection("users").updateOne(
     { _id: new Types.ObjectId(registered.user.id) },

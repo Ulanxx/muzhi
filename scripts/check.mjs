@@ -5,7 +5,7 @@ const buildEnv = {
   ...process.env,
   APP_URL: "https://ci.example.invalid",
   AUTH_SECRET: "ci-only-secret-value-with-more-than-32-characters",
-  MONGODB_URI: "mongodb://127.0.0.1:27017/mdldm_knowledge_kit_test",
+  MONGODB_URI: "mongodb://127.0.0.1:27017/muzhi_knowledge_test",
   PAYMENT_PROVIDER: "manual",
 };
 

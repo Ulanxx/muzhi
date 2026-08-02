@@ -15,7 +15,7 @@ export async function GET() {
   return new Response(body, {
     headers: {
       "Cache-Control": "private, no-store",
-      "Content-Disposition": `attachment; filename="mdldm-admin-export-${date}.json"`,
+      "Content-Disposition": `attachment; filename="muzhi-admin-export-${date}.json"`,
       "Content-Type": "application/json; charset=utf-8",
       "X-Content-Type-Options": "nosniff",
     },

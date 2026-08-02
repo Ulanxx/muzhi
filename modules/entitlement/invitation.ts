@@ -4,7 +4,7 @@ import { hashOpaqueToken } from "@/modules/identity/credentials";
 
 export function generateInvitationCode(): string {
   const value = randomBytes(9).toString("base64url").toUpperCase();
-  return `MDLDM-${value}`;
+  return `MUZHI-${value}`;
 }
 
 export function normalizeInvitationCode(code: string): string {
