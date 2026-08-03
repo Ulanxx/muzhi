@@ -47,3 +47,7 @@ service-account*.json
 
 # GUI 测试截图（本地评审产物）
 gui-test-screenshots/
+.vercel
+.env*
+# 但模板必须可提交（.env* 通配会误伤它）
+!.env.example
