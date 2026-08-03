@@ -27,7 +27,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: `npm run dev -- --turbopack --hostname 127.0.0.1 --port ${port}`,
+    command: `npm run dev -- --hostname 127.0.0.1 --port ${port}`,
     env: {
       ...process.env,
       NEXT_DIST_DIR: ".next-e2e",

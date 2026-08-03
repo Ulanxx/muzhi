@@ -3,6 +3,7 @@ import { isValidObjectId } from "mongoose";
 
 import { authorizeAdminMutation } from "@/app/lib/admin-api";
 import { connectMongo } from "@/providers/database/mongodb/connection";
+import { CourseChapterModel } from "@/providers/database/mongodb/models/learning";
 import { MediaAssetModel } from "@/providers/database/mongodb/models/media";
 import { CourseModel } from "@/providers/database/mongodb/models/series";
 import { getStorageProvider } from "@/providers/storage";
@@ -27,29 +28,42 @@ export async function POST(
     return NextResponse.json({ error: "课时不存在" }, { status: 404 });
   }
 
-  if (!course.videoAssetId) {
-    return NextResponse.json(
-      { error: "发布前必须上传并绑定视频" },
-      { status: 400 },
-    );
-  }
+  // 文档课：只要求至少一个章节，不要求视频。
+  if (course.contentType === "document") {
+    const chapterCount = await CourseChapterModel.countDocuments({
+      courseId: course._id,
+    });
+    if (chapterCount === 0) {
+      return NextResponse.json(
+        { error: "发布前必须至少创建一个章节" },
+        { status: 400 },
+      );
+    }
+  } else {
+    if (!course.videoAssetId) {
+      return NextResponse.json(
+        { error: "发布前必须上传并绑定视频" },
+        { status: 400 },
+      );
+    }
 
-  const asset = await MediaAssetModel.findOne({
-    _id: course.videoAssetId,
-    kind: "video",
-    status: "ready",
-  });
+    const asset = await MediaAssetModel.findOne({
+      _id: course.videoAssetId,
+      kind: "video",
+      status: "ready",
+    });
 
-  const storage = getStorageProvider();
-  if (
-    !asset ||
-    asset.provider !== storage.name ||
-    !(await storage.exists(asset.objectKey))
-  ) {
-    return NextResponse.json(
-      { error: "发布前媒体可用性校验失败" },
-      { status: 400 },
-    );
+    const storage = getStorageProvider();
+    if (
+      !asset ||
+      asset.provider !== storage.name ||
+      !(await storage.exists(asset.objectKey))
+    ) {
+      return NextResponse.json(
+        { error: "发布前媒体可用性校验失败" },
+        { status: 400 },
+      );
+    }
   }
 
   course.status = "published";

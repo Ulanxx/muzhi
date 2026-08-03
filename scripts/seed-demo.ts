@@ -9,6 +9,7 @@ import mongoose from "mongoose";
 
 import { syncConfiguredProducts } from "@/app/lib/commerce-service";
 import { connectMongo } from "@/providers/database/mongodb/connection";
+import { CourseChapterModel } from "@/providers/database/mongodb/models/learning";
 import { CourseMaterialModel } from "@/providers/database/mongodb/models/learning";
 import { MediaAssetModel } from "@/providers/database/mongodb/models/media";
 import {
@@ -209,10 +210,118 @@ async function main() {
     { upsert: true, new: true, runValidators: true },
   );
 
+  // 文档课示例：独立系列 + 一门文档课 + 三章（一章试读）。
+  const docSeries = await SeriesModel.findOneAndUpdate(
+    { slug: "ai-playbook-series" },
+    {
+      $set: {
+        title: "AI 实操手册",
+        description: "一套按章节阅读的 AI 实操手册，先看试读再决定购买。",
+        accessLevel: "course",
+        status: "published",
+      },
+      $setOnInsert: { slug: "ai-playbook-series" },
+    },
+    { upsert: true, new: true, runValidators: true },
+  );
+
+  const docCourse = await CourseModel.findOneAndUpdate(
+    { seriesId: docSeries._id, slug: "ai-playbook" },
+    {
+      $set: {
+        title: "AI 实操手册（文档课）",
+        summary: "一套按章节阅读的 AI 实操手册，购买后永久解锁全部章节。",
+        position: 0,
+        accessLevel: "course",
+        contentType: "document",
+        status: "published",
+        publishedAt: new Date(),
+      },
+      $setOnInsert: {
+        seriesId: docSeries._id,
+        slug: "ai-playbook",
+        videoAssetId: null,
+      },
+    },
+    { upsert: true, new: true, runValidators: true },
+  );
+
+  const docChapters = [
+    {
+      title: "为什么 AI 工具值得学",
+      position: 0,
+      isPreview: true,
+      body: [
+        "很多人买了很多 AI 工具，却几乎没真正用起来。问题不在工具，在于没人把「第一步该做什么」讲清楚。",
+        "",
+        "## 这本手册讲什么",
+        "",
+        "这本手册不讨论模型原理，只做一件事：带你把三件最常用的事亲手做出来。每一章结束，你都有一个能运行的结果。",
+        "",
+        "- 第一章：把环境准备好，别怕那个黑窗口",
+        "- 第二章：写出你的第一个能跑的脚本",
+        "",
+        "> 先试读这一章，觉得对胃口再决定购买。",
+      ].join("\n"),
+    },
+    {
+      title: "命令行基本功",
+      position: 1,
+      isPreview: false,
+      body: [
+        "几乎所有 AI 工具的本地教程，第一步都绕不开命令行。这一章把它讲到你能跟着任何教程走。",
+        "",
+        "## 五个命令就够",
+        "",
+        "- `pwd` 看当前位置",
+        "- `ls` 看目录内容",
+        "- `cd` 进入目录",
+        "- `mkdir` 新建目录",
+        "- `clear` 清空屏幕",
+        "",
+        "把这五个练熟，90% 的入门教程你都能跟下来。",
+      ].join("\n"),
+    },
+    {
+      title: "你的第一个 AI 脚本",
+      position: 2,
+      isPreview: false,
+      body: [
+        "这一章我们写一个真正能跑的脚本：读取一段文字，调用模型，把结果存到文件。",
+        "",
+        "```",
+        "echo \"hello ai\" > input.txt",
+        "node run.js input.txt",
+        "```",
+        "",
+        "跑通之后，你就跨过了从「看教程」到「自己做」的那条线。",
+      ].join("\n"),
+    },
+  ] as const;
+
+  for (const chapter of docChapters) {
+    await CourseChapterModel.findOneAndUpdate(
+      { courseId: docCourse._id, position: chapter.position },
+      {
+        $set: {
+          title: chapter.title,
+          body: chapter.body,
+          isPreview: chapter.isPreview,
+        },
+        $setOnInsert: {
+          courseId: docCourse._id,
+          position: chapter.position,
+        },
+      },
+      { upsert: true, new: true, runValidators: true },
+    );
+  }
+
+  // 商品同步放在所有课程建完之后，避免新商品的目标课程还不存在时被下架。
   const productSync = await syncConfiguredProducts();
 
   console.log(
-    `Demo 数据已就绪：1 个系列，${demoCourses.length} 节课程，1 个视频，1 份资料，${productSync.synced} 个商品`,
+    `Demo 数据已就绪：2 个系列，${demoCourses.length + 1} 节课程（含 1 门文档课、${docChapters.length} 章），1 个视频，1 份资料，${productSync.synced} 个商品`,
   );
 }
 

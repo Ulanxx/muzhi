@@ -32,4 +32,20 @@ export const productsConfig = [
     },
     active: true,
   },
+  {
+    id: "course-ai-playbook",
+    title: "AI 实操手册（文档课）",
+    description: "一套按章节阅读的 AI 实操手册，购买后永久解锁全部章节。",
+    price: {
+      amountInMinorUnits: 19900,
+      currency: "CNY",
+    },
+    entitlement: {
+      type: "course",
+      targetId: null,
+      targetSlug: "ai-playbook",
+      durationDays: null,
+    },
+    active: true,
+  },
 ] as const satisfies readonly ProductDefinition[];

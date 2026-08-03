@@ -3,7 +3,7 @@ import { isValidObjectId } from "mongoose";
 import { z } from "zod";
 
 import { authorizeAdminMutation } from "@/app/lib/admin-api";
-import { accessLevels } from "@/modules/catalog";
+import { accessLevels, contentTypes } from "@/modules/catalog";
 import { connectMongo } from "@/providers/database/mongodb/connection";
 import {
   CourseModel,
@@ -21,6 +21,7 @@ const courseInput = z.object({
     .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
   summary: z.string().trim().min(1).max(1_000),
   accessLevel: z.enum(accessLevels),
+  contentType: z.enum(contentTypes).default("video"),
   position: z.number().int().min(0).max(10_000),
 });
 

@@ -48,6 +48,7 @@ export default async function AdminPage() {
             title: course.title,
             status: course.status,
             accessLevel: course.accessLevel,
+            contentType: course.contentType,
             videoAssetId: course.videoAssetId?.toString() ?? null,
           }))}
           series={seriesRecords.map((item) => ({

@@ -94,6 +94,7 @@ erDiagram
     SERIES ||--o{ COURSE : contains
     COURSE ||--o{ COURSE_PROGRESS : tracks
     COURSE ||--o{ COURSE_MATERIAL : provides
+    COURSE ||--o{ COURSE_CHAPTER : contains
     COURSE ||--o{ TASK_SUBMISSION : receives
     COURSE ||--o{ COMMENT : receives
 

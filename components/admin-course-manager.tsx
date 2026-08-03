@@ -14,6 +14,7 @@ interface CourseOption {
   title: string;
   status: string;
   accessLevel: string;
+  contentType: string;
   videoAssetId: string | null;
 }
 
@@ -148,6 +149,7 @@ export function AdminCourseManager({
           slug: form.get("slug"),
           summary: form.get("summary"),
           accessLevel: form.get("accessLevel"),
+          contentType: form.get("contentType"),
           position: Number(form.get("position")),
         }),
       });
@@ -217,6 +219,29 @@ export function AdminCourseManager({
       const payload = await readPayload(response);
       if (!response.ok) {
         throw new Error(payload.error ?? "发布失败");
+      }
+    });
+  }
+
+  function submitChapter(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+
+    void run(async () => {
+      const response = await fetch("/api/admin/chapters", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          courseId: form.get("courseId"),
+          title: form.get("title"),
+          position: Number(form.get("position")),
+          body: form.get("body"),
+          isPreview: form.get("isPreview") === "on",
+        }),
+      });
+      const payload = await readPayload(response);
+      if (!response.ok) {
+        throw new Error(payload.error ?? "创建章节失败");
       }
     });
   }
@@ -341,16 +366,25 @@ export function AdminCourseManager({
               <option value="course">单课</option>
               <option value="series">系列</option>
             </select>
-            <input
-              aria-label="课时排序"
+            <select
+              aria-label="课时内容类型"
               className={inputClass}
-              defaultValue="0"
-              min="0"
-              name="position"
-              required
-              type="number"
-            />
+              defaultValue="video"
+              name="contentType"
+            >
+              <option value="video">视频课</option>
+              <option value="document">文档课</option>
+            </select>
           </div>
+          <input
+            aria-label="课时排序"
+            className={inputClass}
+            defaultValue="0"
+            min="0"
+            name="position"
+            required
+            type="number"
+          />
           <button
             className="rounded-lg bg-[var(--accent)] px-4 py-2.5 font-semibold text-[var(--accent-ink)]"
             disabled={busy || series.length === 0}
@@ -373,7 +407,11 @@ export function AdminCourseManager({
                 <p className="font-semibold">{course.title}</p>
                 <p className="mt-1 font-mono text-xs text-[var(--muted)]">
                   {course.status} / {course.accessLevel} /{" "}
-                  {course.videoAssetId ? "video ready" : "no video"}
+                  {course.contentType === "document"
+                    ? "文档课"
+                    : course.videoAssetId
+                      ? "video ready"
+                      : "no video"}
                 </p>
               </div>
               <button
@@ -387,6 +425,69 @@ export function AdminCourseManager({
             </div>
           ))}
         </div>
+      </section>
+
+      <section className="surface p-6">
+        <h2 className="text-xl font-semibold">文档课章节</h2>
+        <p className="mt-1 text-sm text-[var(--muted)]">
+          为文档课添加章节。勾选「试读」的章节对未购买用户公开。
+        </p>
+        <form className="mt-5 grid gap-4" onSubmit={submitChapter}>
+          <select
+            aria-label="章节所属文档课"
+            className={inputClass}
+            name="courseId"
+            required
+          >
+            {courses
+              .filter((course) => course.contentType === "document")
+              .map((course) => (
+                <option key={course.id} value={course.id}>
+                  {course.title}
+                </option>
+              ))}
+          </select>
+          <div className="grid grid-cols-2 gap-3">
+            <input
+              aria-label="章节标题"
+              className={inputClass}
+              name="title"
+              placeholder="章节标题"
+              required
+            />
+            <input
+              aria-label="章节排序"
+              className={inputClass}
+              defaultValue="0"
+              min="0"
+              name="position"
+              required
+              type="number"
+            />
+          </div>
+          <textarea
+            aria-label="章节正文（Markdown）"
+            className={inputClass}
+            name="body"
+            placeholder="章节正文，支持 Markdown"
+            rows={8}
+          />
+          <label className="flex items-center gap-2 text-sm">
+            <input name="isPreview" type="checkbox" />
+            设为试读章（未购买用户可见）
+          </label>
+          <button
+            className="rounded-lg bg-[var(--accent)] px-4 py-2.5 font-semibold text-[var(--accent-ink)]"
+            disabled={
+              busy ||
+              courses.filter((course) => course.contentType === "document")
+                .length === 0
+            }
+            type="submit"
+          >
+            添加章节
+          </button>
+        </form>
       </section>
 
       <section className="grid gap-5 lg:grid-cols-2">

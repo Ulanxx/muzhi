@@ -41,13 +41,19 @@ export function CheckoutPanel({
   products,
   paymentMethods,
   signedIn,
+  lockedProductId,
+  onFulfilled,
 }: {
   products: ProductView[];
   paymentMethods: string[];
   signedIn: boolean;
+  /** 传入后只展示并锁定这一个商品，用于课程页内直达单课购买。 */
+  lockedProductId?: string;
+  /** 订单 fulfilled 后回调，供课程页刷新解锁内容。 */
+  onFulfilled?: () => void;
 }) {
   const [selectedProduct, setSelectedProduct] = useState(
-    products[0]?.id ?? "",
+    lockedProductId ?? products[0]?.id ?? "",
   );
   const [paymentMethod, setPaymentMethod] = useState(
     paymentMethods[0] ?? "",
@@ -79,13 +85,14 @@ export function CheckoutPanel({
           setOrderStatus(payload.order.status);
           if (payload.order.fulfillmentStatus === "fulfilled") {
             setMessage("支付已确认，权益已经发放。");
+            onFulfilled?.();
           }
         })
         .catch(() => undefined);
     }, 3_000);
 
     return () => window.clearInterval(timer);
-  }, [orderStatus, result]);
+  }, [orderStatus, result, onFulfilled]);
 
   async function createOrder() {
     setBusy(true);
@@ -133,6 +140,7 @@ export function CheckoutPanel({
       }
       setOrderStatus("fulfilled");
       setMessage("Mock 支付已确认，权益已经幂等发放。");
+      onFulfilled?.();
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "支付确认失败");
     } finally {
@@ -154,7 +162,11 @@ export function CheckoutPanel({
   return (
     <div className="mt-10 grid gap-6 lg:grid-cols-[1fr_0.85fr]">
       <section className="grid gap-4">
-        {products.map((product) => (
+        {products
+          .filter(
+            (product) => !lockedProductId || product.id === lockedProductId,
+          )
+          .map((product) => (
           <button
             className={`surface focus-ring p-6 text-left transition-transform hover:-translate-y-0.5 ${
               selectedProduct === product.id

@@ -4,15 +4,22 @@ import { z } from "zod";
 
 import { canCurrentUserAccessCourse } from "@/app/lib/course-access";
 import {
+  isDocumentCourseComplete,
+  markChapterRead,
+} from "@/modules/catalog/chapters";
+import {
   getExpectedRequestOrigin,
   isSameOriginRequest,
 } from "@/modules/identity/security";
 import { getCurrentUser } from "@/providers/auth/session";
 import { connectMongo } from "@/providers/database/mongodb/connection";
-import { CourseProgressModel } from "@/providers/database/mongodb/models/learning";
+import {
+  CourseChapterModel,
+  CourseProgressModel,
+} from "@/providers/database/mongodb/models/learning";
 import { CourseModel } from "@/providers/database/mongodb/models/series";
 
-const progressSchema = z
+const videoProgressSchema = z
   .object({
     currentTimeSeconds: z.number().finite().min(0),
     durationSeconds: z.number().finite().min(0),
@@ -24,6 +31,13 @@ const progressSchema = z
       value.currentTimeSeconds <= value.durationSeconds + 5,
     "播放进度不能超过视频时长",
   );
+
+const readingProgressSchema = z.object({
+  chapterId: z.string().min(1).refine(isValidObjectId, "章节 ID 不合法"),
+  read: z.literal(true),
+});
+
+const progressSchema = z.union([videoProgressSchema, readingProgressSchema]);
 
 async function findContext(courseId: string) {
   if (!isValidObjectId(courseId)) {
@@ -70,6 +84,7 @@ export async function GET(
           durationSeconds: progress.durationSeconds,
           completed: progress.completed,
           lastWatchedAt: progress.lastWatchedAt,
+          readChapterIds: progress.readChapterIds ?? [],
         }
       : null,
   });
@@ -101,6 +116,59 @@ export async function PUT(
   );
   if (!parsed.success) {
     return NextResponse.json({ error: "学习进度格式错误" }, { status: 400 });
+  }
+
+  // 阅读分支：标记某章已读，章节必须真实存在且属于本课程。
+  if ("chapterId" in parsed.data) {
+    const chapter = await CourseChapterModel.findOne({
+      _id: parsed.data.chapterId,
+      courseId,
+    }).lean();
+    if (!chapter) {
+      return NextResponse.json({ error: "章节不存在" }, { status: 404 });
+    }
+
+    const existing = await CourseProgressModel.findOne({
+      userId: current.user.id,
+      courseId,
+    }).lean();
+    const nextRead = markChapterRead(
+      existing?.readChapterIds ?? [],
+      chapter._id.toString(),
+    );
+    const totalChapters = await CourseChapterModel.countDocuments({
+      courseId,
+    });
+    const completed = isDocumentCourseComplete(totalChapters, nextRead);
+
+    const progress = await CourseProgressModel.findOneAndUpdate(
+      {
+        userId: current.user.id,
+        courseId,
+      },
+      {
+        $set: {
+          seriesId: current.course.seriesId,
+          readChapterIds: nextRead,
+          completed,
+          completedAt: completed ? new Date() : null,
+          lastWatchedAt: new Date(),
+        },
+      },
+      {
+        upsert: true,
+        new: true,
+        runValidators: true,
+      },
+    );
+
+    return NextResponse.json({
+      progress: {
+        readChapterIds: progress.readChapterIds,
+        completed: progress.completed,
+        lastWatchedAt: progress.lastWatchedAt,
+      },
+    });
   }
 
   const completionRatio =

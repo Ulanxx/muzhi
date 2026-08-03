@@ -20,7 +20,7 @@ test("renders the runnable project skeleton", async ({ page }) => {
   await expect(
     page.getByRole("heading", {
       level: 1,
-      name: "知识产品，自己交付",
+      name: "从零开始 把 AI 用起来",
     }),
   ).toBeVisible();
   await expect(page.getByText("全站年度会员")).toBeVisible();

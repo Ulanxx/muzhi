@@ -10,6 +10,9 @@ export const accessLevels = [
 ] as const;
 export type AccessLevel = (typeof accessLevels)[number];
 
+export const contentTypes = ["video", "document"] as const;
+export type ContentType = (typeof contentTypes)[number];
+
 export interface CourseAccessPolicy {
   level: AccessLevel;
   courseId: string;

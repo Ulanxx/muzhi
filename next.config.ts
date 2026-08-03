@@ -1,7 +1,5 @@
 import createMDX from "@next/mdx";
 import type { NextConfig } from "next";
-import remarkFrontmatter from "remark-frontmatter";
-import remarkGfm from "remark-gfm";
 
 const securityHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },
@@ -58,9 +56,10 @@ const nextConfig: NextConfig = {
 
 const withMDX = createMDX({
   options: {
-    // remark-frontmatter 必须在前：剥掉 YAML frontmatter，
-    // 否则它会被当作正文标题渲染出来。
-    remarkPlugins: [remarkFrontmatter, remarkGfm],
+    // 用字符串插件名而非导入的函数：Turbopack 无法序列化 JS 函数插件，
+    // 而 E2E 与新版 Next 默认走 Turbopack。remark-frontmatter 必须在前，
+    // 剥掉 YAML frontmatter，否则它会被当作正文标题渲染出来。
+    remarkPlugins: ["remark-frontmatter", "remark-gfm"],
   },
 });
 
