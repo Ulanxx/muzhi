@@ -33,6 +33,12 @@ export async function SiteHeader({ site }: { site: SiteConfig }) {
             课程
           </Link>
           <Link
+            className="focus-ring transition-colors hover:text-[var(--muted)]"
+            href="/blog"
+          >
+            博客
+          </Link>
+          <Link
             className="focus-ring hidden transition-colors hover:text-[var(--muted)] sm:block"
             href="/pricing"
           >

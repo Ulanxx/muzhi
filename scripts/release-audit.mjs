@@ -190,6 +190,16 @@ async function main() {
     const licenses = Array.isArray(metadata.license)
       ? metadata.license
       : [metadata.license];
+    // 上游包在 package.json 里漏了 license 字段，但 README 明确声明了许可证。
+    // 这里按包名+版本做人工映射，并注明出处，避免误报。
+    const licenseOverrides = {
+      // format@0.2.2 的 README 声明 MIT，但 package.json 无 license 字段。
+      "node_modules/format@0.2.2": "MIT",
+    };
+    const overrideKey = `${packagePath}@${metadata.version}`;
+    if (!metadata.license && licenseOverrides[overrideKey]) {
+      continue;
+    }
     if (!metadata.license) {
       addFinding(findings, "package-lock.json", `${packagePath} 缺少 license`);
     } else if (licenses.some((license) => !allowedLicenses.has(license))) {

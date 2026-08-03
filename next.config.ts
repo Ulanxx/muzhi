@@ -1,4 +1,7 @@
+import createMDX from "@next/mdx";
 import type { NextConfig } from "next";
+import remarkFrontmatter from "remark-frontmatter";
+import remarkGfm from "remark-gfm";
 
 const securityHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },
@@ -42,6 +45,7 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   serverExternalPackages: ["ali-oss"],
+  pageExtensions: ["ts", "tsx", "mdx"],
   async headers() {
     return [
       {
@@ -52,4 +56,12 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+const withMDX = createMDX({
+  options: {
+    // remark-frontmatter 必须在前：剥掉 YAML frontmatter，
+    // 否则它会被当作正文标题渲染出来。
+    remarkPlugins: [remarkFrontmatter, remarkGfm],
+  },
+});
+
+export default withMDX(nextConfig);

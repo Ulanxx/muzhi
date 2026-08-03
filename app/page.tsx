@@ -4,6 +4,7 @@ import type { Types } from "mongoose";
 import { SiteHeader } from "@/components/site-header";
 import { productsConfig } from "@/config/products.config";
 import { getSiteConfig } from "@/config/site.config";
+import { listRecentPosts } from "@/modules/blog";
 import { connectMongo } from "@/providers/database/mongodb/connection";
 import {
   CourseModel,
@@ -42,6 +43,8 @@ export default async function HomePage() {
   } catch {
     courses = [];
   }
+
+  const recentPosts = await listRecentPosts(3).catch(() => []);
 
   return (
     <>
@@ -191,6 +194,46 @@ export default async function HomePage() {
             </div>
           </div>
         </section>
+
+        {/* 最新文章：免费内容承上启下 */}
+        {recentPosts.length > 0 ? (
+          <section className="rule-top bg-[var(--surface)] py-20" id="blog">
+            <div className="page-shell">
+              <div className="flex flex-wrap items-end justify-between gap-6">
+                <h2 className="headline text-[clamp(2.5rem,6vw,5rem)]">
+                  最新文章
+                </h2>
+                <Link
+                  className="focus-ring border-b-2 border-[var(--ink)] pb-1 text-sm font-bold"
+                  href="/blog"
+                >
+                  全部文章
+                </Link>
+              </div>
+
+              <ol className="mt-12 grid gap-px bg-[var(--line)] sm:grid-cols-3">
+                {recentPosts.map((post) => (
+                  <li key={post.slug}>
+                    <Link
+                      className="focus-ring group flex h-full flex-col bg-[var(--page)] p-7 transition-colors hover:bg-[var(--accent)]"
+                      href={`/blog/${post.slug}`}
+                    >
+                      <time className="eyebrow text-[var(--muted)]">
+                        {post.date}
+                      </time>
+                      <span className="mt-4 block text-xl font-bold leading-snug tracking-[-0.01em] group-hover:underline">
+                        {post.title}
+                      </span>
+                      <span className="mt-3 block flex-1 leading-7 text-[var(--muted)]">
+                        {post.summary}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </section>
+        ) : null}
       </main>
 
       <footer className="rule-top py-10">
