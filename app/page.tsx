@@ -60,7 +60,7 @@ export default async function HomePage() {
           <h1 className="headline mt-8 text-[clamp(3.5rem,11vw,10rem)]">
             从零开始
             <br />
-            把 <span className="bg-[var(--accent)] px-2">AI</span> 用起来
+            把 <span className="inline-block bg-[var(--accent)] px-3 text-[var(--accent-ink)]">AI</span> 用起来
           </h1>
 
           <div className="mt-14 grid gap-10 border-t-2 border-[var(--rule)] pt-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
