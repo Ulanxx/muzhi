@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Types } from "mongoose";
 
+import { Seal } from "@/components/seal";
 import { SiteHeader } from "@/components/site-header";
 import { productsConfig } from "@/config/products.config";
 import { getSiteConfig } from "@/config/site.config";
@@ -53,7 +54,7 @@ export default async function HomePage() {
         {/* 头版：超大标题压满版心，右栏是编辑元数据而非运行时参数 */}
         <section className="page-shell pb-20 pt-16 lg:pb-28 lg:pt-24">
           <p className="eyebrow text-[var(--muted)]">
-            零基础 · AI 实操 · 牧之出品
+            零基础 · AI 实操 · zmzai cloud 牧之 出品
           </p>
 
           <h1 className="headline mt-8 text-[clamp(3.5rem,11vw,10rem)]">
@@ -237,9 +238,20 @@ export default async function HomePage() {
       </main>
 
       <footer className="rule-top py-10">
-        <div className="page-shell flex flex-col gap-2 text-sm text-[var(--muted)] sm:flex-row sm:items-center sm:justify-between">
-          <p className="font-bold text-[var(--ink)]">{site.name}</p>
-          <p>由牧之搭建 · 基于开源知识站底座</p>
+        <div className="page-shell flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <div className="flex flex-col gap-3">
+            <Seal size={40} />
+            <p className="font-mono text-xs text-[var(--muted)]">
+              {site.name}
+              <br />
+              zmzai.cloud · 牧之 署名
+            </p>
+          </div>
+          <p className="font-mono text-xs text-[var(--muted)] sm:text-right">
+            作者在场。不自托管即不署名。
+            <br />
+            Apache-2.0 · {new Date().getFullYear()}
+          </p>
         </div>
       </footer>
     </>

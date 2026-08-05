@@ -1,23 +1,51 @@
 @import "tailwindcss";
 
-/* 杂志编辑部：纸感底、墨色字、单一荧光强调色。
-   刻意不跟随系统深色模式——印刷品没有深色版。 */
+/* zmzai cloud 牧之 — 印章 + 手作纸。
+   暖浆纸底、暖墨字、印泥红强调。不跟随系统深色——印刷品没有深色版。
+   配色源锁定见 zmzai-cloud/design.md（Hallmark Study）。 */
+
+/* @theme inline：把裸 token 暴露成 Tailwind v4 工具类（bg-ink / text-accent 等），
+   同时保留下方 :root 的裸名变量，让现有 var(--xxx) 用法零改动继承新色。 */
+@theme inline {
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-surface-strong: var(--surface-strong);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-rule: var(--rule);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-ink: var(--accent-ink);
+  --color-success: var(--success);
+
+  --font-sans: var(--font-serif), "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", system-ui, serif;
+  --font-serif: var(--font-serif), "Source Han Serif SC", "Songti SC", serif;
+  --font-mono: var(--font-mono), ui-monospace, "SFMono-Regular", monospace;
+
+  --radius-card: 2px;
+  --radius-input: 0px;
+}
+
 :root {
   color-scheme: light;
-  --page: #faf8f4;
-  --surface: #ffffff;
-  --surface-strong: #f0ece4;
-  --ink: #0b0b0b;
-  --muted: #6b6862;
-  --line: #ddd8cd;
-  --rule: #0b0b0b;
-  --accent: #d8ff3e;
-  --accent-strong: #c4eb1f;
-  --accent-ink: #0b0b0b;
-  /* 荧光绿只能做背景。文字要用这个能读的深橄榄色。 */
-  --accent-readable: #4a5800;
-  --success: #1f7554;
-  --shadow: rgba(11, 11, 11, 0.08);
+  /* 暖浆纸底，比纯白有「浆」感；暖墨非纯黑，避免 AI 廉价对比。 */
+  --page: oklch(0.95 0.012 85);
+  --surface: oklch(0.97 0.008 85);
+  --surface-strong: oklch(0.92 0.014 80);
+  --ink: oklch(0.18 0.011 40);
+  --muted: oklch(0.47 0.013 55);
+  --line: oklch(0.86 0.012 80);
+  --rule: oklch(0.18 0.011 40);
+  /* 印泥红替代荧光绿——暖、有出处、不属于 AI 默认色板。 */
+  --accent: oklch(0.46 0.15 27);
+  --accent-strong: oklch(0.39 0.15 27);
+  --accent-ink: oklch(0.97 0.008 85);
+  /* 印泥红本身可读，不再需要荧光绿配的深橄榄色；保留变量名兼容 18 处用法。 */
+  --accent-readable: oklch(0.39 0.15 27);
+  --success: oklch(0.52 0.09 160);
+  --shadow: oklch(0.18 0.011 40 / 0.08);
 }
 
 /* 基础元素样式必须放进 @layer base：无 layer 的 CSS 会压过 Tailwind
@@ -36,8 +64,8 @@
     margin: 0;
     background: var(--page);
     color: var(--ink);
-    font-family: var(--font-geist-sans), "PingFang SC", "Hiragino Sans GB",
-      "Microsoft YaHei", system-ui, sans-serif;
+    font-family: var(--font-serif), "PingFang SC", "Hiragino Sans GB",
+      "Microsoft YaHei", system-ui, serif;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
   }
@@ -67,7 +95,7 @@
 
 /* 栏目编号、小标签这类「印刷家具」 */
 .eyebrow {
-  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.6875rem;
   font-weight: 600;
   letter-spacing: 0.22em;

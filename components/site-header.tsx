@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { LogoutButton } from "@/components/logout-button";
+import { Wordmark } from "@/components/wordmark";
 import type { SiteConfig } from "@/modules/site";
 import { getCurrentUser } from "@/providers/auth/session";
 
@@ -11,13 +12,11 @@ export async function SiteHeader({ site }: { site: SiteConfig }) {
     <header className="sticky top-0 z-50 border-b-2 border-[var(--rule)] bg-[var(--page)]">
       <div className="page-shell flex h-16 items-center justify-between gap-6">
         <Link className="focus-ring flex min-w-0 items-center gap-2.5" href="/">
+          <Wordmark />
           <span
             aria-hidden="true"
-            className="grid size-7 place-items-center bg-[var(--ink)] font-mono text-xs font-bold text-[var(--page)]"
+            className="hidden text-sm font-bold tracking-[-0.01em] text-[var(--muted)] sm:inline"
           >
-            牧
-          </span>
-          <span className="truncate text-sm font-bold tracking-[-0.01em]">
             {site.name}
           </span>
         </Link>

@@ -163,7 +163,7 @@ export function VerifyEmailForm() {
       <p className="text-sm leading-6 text-[var(--muted)]">
         点击后会验证当前链接。验证链接只能使用一次。
       </p>
-      <p aria-live="polite" className="text-sm text-red-700 dark:text-red-300">
+      <p aria-live="polite" className="text-sm text-red-700">
         {status}
       </p>
       <button
@@ -243,7 +243,7 @@ export function ResetPasswordForm() {
           type="password"
         />
       </label>
-      <p aria-live="polite" className="text-sm text-red-700 dark:text-red-300">
+      <p aria-live="polite" className="text-sm text-red-700">
         {status}
       </p>
       <button className={buttonClass} disabled={busy || !token} type="submit">

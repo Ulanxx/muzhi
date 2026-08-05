@@ -41,7 +41,7 @@ export function LoginForm() {
   return (
     <form className="surface mt-8 grid gap-5 p-7" onSubmit={handleSubmit}>
       {searchParams.get("verified") === "1" ? (
-        <p className="text-sm text-emerald-700 dark:text-emerald-300">
+        <p className="text-sm text-emerald-700">
           邮箱验证成功，现在可以登录。
         </p>
       ) : null}
@@ -74,7 +74,7 @@ export function LoginForm() {
       </div>
 
       {error ? (
-        <p className="text-sm text-red-700 dark:text-red-300">{error}</p>
+        <p className="text-sm text-red-700">{error}</p>
       ) : null}
 
       <button
