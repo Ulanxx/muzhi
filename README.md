@@ -1,4 +1,4 @@
-# mdldm Knowledge Kit
+# 牧之知识产品
 
 [![CI](https://github.com/Ulanxx/muzhi-knowledge-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/Ulanxx/muzhi-knowledge-kit/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/Ulanxx/muzhi-knowledge-kit/actions/workflows/codeql.yml/badge.svg)](https://github.com/Ulanxx/muzhi-knowledge-kit/actions/workflows/codeql.yml)
@@ -7,7 +7,7 @@
 
 一套面向个人创作者的、自托管的知识产品交付与会员运营底座。
 
-项目由麦当 mdldm 发起，来自一个已经稳定运行的真实知识站实践。这里不会公开复制原站，而是重新提炼其中可复用的课程交付闭环，并将个人 IP、真实业务数据和私有服务隔离在公共核心之外。
+本项目基于 [mdldm-knowledge-kit](https://github.com/CzzzzzzJ/mdldm-knowledge-kit)（Apache-2.0）二次开发，在原项目核心底座上新增了杂志编辑部视觉风格、免费免登博客、文档型付费课程等功能。原项目由麦当 mdldm 发起。
 
 > 当前版本：`v0.1.0 / Phase 6 public release`
 >
@@ -300,4 +300,4 @@ npm run test:e2e
 
 ## License
 
-本项目公共核心采用 [Apache License 2.0](LICENSE)。该许可证不授予 `mdldm`、麦当相关名称、Logo 或其他商标的额外使用权。
+本项目基于 [mdldm-knowledge-kit](https://github.com/CzzzzzzJ/mdldm-knowledge-kit)（Apache-2.0）二次开发。原项目核心代码底座（领域模型、Provider 抽象、支付幂等、权益判定、安全基线、测试套件）遵循 Apache License 2.0，详见 [NOTICE](NOTICE)。该许可证不授予 `mdldm`、麦当相关名称、Logo 或其他商标的额外使用权。

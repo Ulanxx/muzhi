@@ -1,0 +1,23 @@
+muzhi-knowledge-kit
+Copyright 2026 牧之 (Ulanxx)
+
+本项目基于 mdldm-knowledge-kit (https://github.com/CzzzzzzJ/mdldm-knowledge-kit)
+二次开发，原项目采用 Apache License 2.0。
+
+原项目核心贡献者：麦当 mdldm (@CzzzzzzJ)
+
+本项目在原项目基础上新增了以下内容：
+- 全站品牌标识改为牧之知识产品
+- 杂志编辑部视觉风格
+- 免费免登博客（MDX + SEO）
+- 文档型付费课程（章节 + 付费墙 + 逐章进度）
+- 前台登录态导航与登出入口
+
+以下代码来自原项目，遵循 Apache-2.0 许可：
+- modules/ 领域模型与纯函数
+- providers/ 支付/存储/邮件/监控 Provider 抽象
+- app/lib/commerce-service.ts 支付幂等与履约
+- app/lib/identity-service.ts 身份验证
+- app/lib/course-access.ts 权益判定
+- 安全基线（CSRF、限流、会话、CSP）
+- 测试套件（单元测试与 E2E）
