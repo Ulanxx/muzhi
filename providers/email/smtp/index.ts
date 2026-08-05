@@ -29,6 +29,12 @@ function createTransport() {
       },
       disableFileAccess: true,
       disableUrlAccess: true,
+      // Serverless 函数有严格时限（Vercel Hobby 10s）。SMTP 走跨境
+      // 服务器时握手可能很慢，这里把每个阶段都限制在 5 秒以内，
+      // 避免单个邮件拖垮整个注册/找回请求。
+      connectionTimeout: 5_000,
+      greetingTimeout: 5_000,
+      socketTimeout: 5_000,
     }),
   };
 }

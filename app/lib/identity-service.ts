@@ -111,15 +111,16 @@ export async function registerUser(input: {
     emailVerified: false,
   });
 
-  try {
-    await sendIdentityAction(user, "verify_email");
-    return { user, emailSent: true };
-  } catch {
+  // 邮件发送不阻塞注册返回：Serverless 函数有严格时限（Hobby 10s），
+  // SMTP 跨境握手可能超时。用户已创建即可返回，邮件失败走重发流程。
+  // 不 await，但用 catch 兜底防止 unhandledRejection。
+  void sendIdentityAction(user, "verify_email").catch((error: unknown) => {
     structuredLog("warn", "registration_email_not_sent", {
       userId: user._id.toString(),
+      reason: error instanceof Error ? error.message : "unknown",
     });
-    return { user, emailSent: false };
-  }
+  });
+  return { user, emailSent: true };
 }
 
 export async function resendVerification(email: string): Promise<void> {
