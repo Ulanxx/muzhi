@@ -21,23 +21,35 @@ export function Seal({
       className={className}
     >
       <rect
-        x="3"
-        y="3"
-        width="94"
-        height="94"
+        x="4"
+        y="4"
+        width="92"
+        height="92"
         rx="2"
         fill="var(--accent-strong)"
       />
+      {/* 朱文方印：两字竖排，传统印章读法上→下。字号留足内边距避免溢出。 */}
       <text
         x="50"
-        y="58"
+        y="42"
         textAnchor="middle"
-        fontSize="40"
+        fontSize="34"
         fontWeight="700"
         fill="var(--accent-ink)"
         fontFamily="var(--font-serif), serif"
       >
-        牧之
+        牧
+      </text>
+      <text
+        x="50"
+        y="80"
+        textAnchor="middle"
+        fontSize="34"
+        fontWeight="700"
+        fill="var(--accent-ink)"
+        fontFamily="var(--font-serif), serif"
+      >
+        之
       </text>
     </svg>
   );
