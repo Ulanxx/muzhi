@@ -24,7 +24,7 @@ const envSchema = z
       .enum(["development", "test", "production"])
       .default("development"),
     APP_URL: z.string().url().default("http://localhost:3000"),
-    APP_NAME: z.string().min(1).default("牧之知识产品"),
+    APP_NAME: z.string().min(1).default("牧之 AI 知识体系"),
     MONGODB_URI: z
       .string()
       .min(1)

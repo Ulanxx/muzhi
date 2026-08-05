@@ -1,13 +1,13 @@
-# 牧之知识产品
+# 牧之 AI 知识体系
 
-[![CI](https://github.com/Ulanxx/muzhi-knowledge-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/Ulanxx/muzhi-knowledge-kit/actions/workflows/ci.yml)
-[![CodeQL](https://github.com/Ulanxx/muzhi-knowledge-kit/actions/workflows/codeql.yml/badge.svg)](https://github.com/Ulanxx/muzhi-knowledge-kit/actions/workflows/codeql.yml)
-[![Release](https://img.shields.io/github/v/release/Ulanxx/muzhi-knowledge-kit)](https://github.com/Ulanxx/muzhi-knowledge-kit/releases/latest)
+[![CI](https://github.com/Ulanxx/muzhi/actions/workflows/ci.yml/badge.svg)](https://github.com/Ulanxx/muzhi/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/Ulanxx/muzhi/actions/workflows/codeql.yml/badge.svg)](https://github.com/Ulanxx/muzhi/actions/workflows/codeql.yml)
+[![Release](https://img.shields.io/github/v/release/Ulanxx/muzhi)](https://github.com/Ulanxx/muzhi/releases/latest)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
 一套面向个人创作者的、自托管的知识产品交付与会员运营底座。
 
-本项目基于 [mdldm-knowledge-kit](https://github.com/CzzzzzzJ/mdldm-knowledge-kit)（Apache-2.0）二次开发，在原项目核心底座上新增了杂志编辑部视觉风格、免费免登博客、文档型付费课程等功能。原项目由麦当 mdldm 发起。
+本项目基于 [mdldm-knowledge-kit](https://github.com/CzzzzzzJ/mdldm-knowledge-kit)（Apache-2.0）二次开发，在原项目核心底座上新增了 zmzai cloud 牧之品牌视觉、免费免登博客、文档型付费课程等功能。原项目由麦当 mdldm 发起。
 
 > 当前版本：`v0.1.0 / Phase 6 public release`
 >
@@ -90,8 +90,8 @@
 ## 快速启动
 
 ```bash
-git clone https://github.com/Ulanxx/muzhi-knowledge-kit.git
-cd muzhi-knowledge-kit
+git clone https://github.com/Ulanxx/muzhi.git
+cd muzhi
 npm ci
 cp .env.example .env.local
 openssl rand -hex 32
@@ -247,7 +247,7 @@ OBSERVABILITY_PROVIDER=console
 
 ```dotenv
 OBSERVABILITY_PROVIDER=webhook
-OBSERVABILITY_WEBHOOK_URL=https://alerts.example.com/hooks/mdldm
+OBSERVABILITY_WEBHOOK_URL=https://alerts.example.com/hooks/zmzai
 OBSERVABILITY_WEBHOOK_SECRET=replace-with-at-least-32-random-characters
 ```
 
@@ -262,7 +262,7 @@ Slack、飞书、Teams 等平台通常有自己的消息格式和签名协议，
 ```dotenv
 NODE_ENV=production
 APP_URL=https://your-domain.example
-APP_NAME=mdldm Knowledge Kit
+APP_NAME=牧之 AI 知识体系
 MONGODB_URI=mongodb+srv://...
 AUTH_SECRET=replace-with-at-least-32-random-characters
 STORAGE_PROVIDER=oss

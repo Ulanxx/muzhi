@@ -31,10 +31,6 @@ Demo 管理员由部署者使用 `npm run create-admin` 创建，仓库不提供
 
 ### 首页
 
-![mdldm Knowledge Kit 首页](assets/home.png)
-
-### 课程交付后台
-
-![mdldm Knowledge Kit 运营后台](assets/admin-operations.png)
+![牧之 AI 知识体系 首页](assets/home.png)
 
 截图来自只含虚构数据的隔离 Demo 数据库。每次明显改变界面时，应重新生成并检查截图中不存在真实邮箱、订单、域名或密钥。
