@@ -52,7 +52,7 @@ export default async function HomePage() {
       <SiteHeader site={site} />
       <main>
         {/* 头版：超大标题压满版心，右栏是编辑元数据而非运行时参数 */}
-        <section className="page-shell pb-20 pt-16 lg:pb-28 lg:pt-24">
+        <section className="page-shell pb-24 pt-20 lg:pb-32 lg:pt-28">
           <p className="eyebrow text-[var(--muted)]">
             零基础 · AI 实操 · zmzai cloud 牧之 出品
           </p>
@@ -63,9 +63,9 @@ export default async function HomePage() {
             把 <span className="inline-block bg-[var(--accent)] px-3 text-[var(--accent-ink)]">AI</span> 用起来
           </h1>
 
-          <div className="mt-14 grid gap-10 border-t-2 border-[var(--rule)] pt-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
+          <div className="mt-16 grid gap-12 border-t-2 border-[var(--rule)] pt-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
             <div>
-              <p className="max-w-[34rem] text-xl leading-9 sm:text-2xl">
+              <p className="max-w-[40rem] text-2xl leading-10 sm:text-3xl sm:leading-[3rem]">
                 给完全没有技术背景的人，一套能从头跟着做完的 AI
                 学习路径。不讲空理论，每节课结束你都有一个能用的东西。
               </p>
@@ -240,7 +240,7 @@ export default async function HomePage() {
       <footer className="rule-top py-10">
         <div className="page-shell flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div className="flex flex-col gap-3">
-            <Seal size={40} />
+            <Seal size={56} />
             <p className="font-mono text-xs text-[var(--muted)]">
               {site.name}
               <br />
