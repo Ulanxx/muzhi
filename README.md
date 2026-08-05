@@ -1,8 +1,8 @@
 # mdldm Knowledge Kit
 
-[![CI](https://github.com/CzzzzzzJ/mdldm-knowledge-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/CzzzzzzJ/mdldm-knowledge-kit/actions/workflows/ci.yml)
-[![CodeQL](https://github.com/CzzzzzzJ/mdldm-knowledge-kit/actions/workflows/codeql.yml/badge.svg)](https://github.com/CzzzzzzJ/mdldm-knowledge-kit/actions/workflows/codeql.yml)
-[![Release](https://img.shields.io/github/v/release/CzzzzzzJ/mdldm-knowledge-kit)](https://github.com/CzzzzzzJ/mdldm-knowledge-kit/releases/latest)
+[![CI](https://github.com/Ulanxx/muzhi-knowledge-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/Ulanxx/muzhi-knowledge-kit/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/Ulanxx/muzhi-knowledge-kit/actions/workflows/codeql.yml/badge.svg)](https://github.com/Ulanxx/muzhi-knowledge-kit/actions/workflows/codeql.yml)
+[![Release](https://img.shields.io/github/v/release/Ulanxx/muzhi-knowledge-kit)](https://github.com/Ulanxx/muzhi-knowledge-kit/releases/latest)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
 一套面向个人创作者的、自托管的知识产品交付与会员运营底座。
@@ -90,8 +90,8 @@
 ## 快速启动
 
 ```bash
-git clone https://github.com/CzzzzzzJ/mdldm-knowledge-kit.git
-cd mdldm-knowledge-kit
+git clone https://github.com/Ulanxx/muzhi-knowledge-kit.git
+cd muzhi-knowledge-kit
 npm ci
 cp .env.example .env.local
 openssl rand -hex 32

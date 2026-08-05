@@ -27,7 +27,7 @@ git status --short
 git tag -a v0.1.0 -m "mdldm Knowledge Kit v0.1.0"
 git push origin main --follow-tags
 gh release create v0.1.0 \
-  --repo CzzzzzzJ/mdldm-knowledge-kit \
+  --repo Ulanxx/muzhi-knowledge-kit \
   --title "mdldm Knowledge Kit v0.1.0" \
   --notes-file RELEASE_NOTES.md
 ```
