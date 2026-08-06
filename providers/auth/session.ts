@@ -49,6 +49,8 @@ export async function createSession(user: UserDocument): Promise<void> {
     secure: env.NODE_ENV === "production",
     sameSite: "lax",
     path: "/",
+    // 父域共享：让 muzhi 登录态对 zmzai.cloud 各子域（中转驿等）可见
+    ...(env.SESSION_COOKIE_DOMAIN ? { domain: env.SESSION_COOKIE_DOMAIN } : {}),
     expires: expiresAt,
   });
 }

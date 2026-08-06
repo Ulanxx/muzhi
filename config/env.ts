@@ -34,6 +34,8 @@ const envSchema = z
       .string()
       .regex(/^[a-zA-Z0-9_-]+$/)
       .default("muzhi_session"),
+    /** cookie 作用域父域（如 .zmzai.cloud），让子域共享登录态；空=仅当前域 */
+    SESSION_COOKIE_DOMAIN: z.string().trim().min(1).optional(),
     SESSION_TTL_DAYS: z.coerce.number().int().min(1).max(90).default(30),
     EMAIL_VERIFICATION_TTL_HOURS: z.coerce
       .number()
