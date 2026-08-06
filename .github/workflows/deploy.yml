@@ -1,0 +1,15 @@
+name: deploy
+
+"on":
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, hk]
+    env:
+      APP_NAME: muzhi
+    steps:
+      - name: Deploy
+        run: bash /opt/zmzai/scripts/deploy-app.sh ${APP_NAME}
