@@ -1,0 +1,31 @@
+name: deploy
+
+# push 到 main 时自动部署到服务器。
+# 每个应用仓都有自己的这份 workflow（改 APP_NAME 即可）。
+# 需要在 GitHub 仓 Settings → Secrets 配：
+#   DEPLOY_HOST       = 149.88.84.189
+#   DEPLOY_USER       = root
+#   DEPLOY_SSH_KEY    = 部署私钥（/tmp/zmzai-deploy-key 的内容）
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}   # 允许手动触发
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      APP_NAME: muzhi        # ← 各仓改成自己的进程名
+      DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+      DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+    steps:
+      - name: Deploy to HK server
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          script: |
+            set -e
+            cd /opt/zmzai/${APP_NAME}
+            bash scripts/deploy-app.sh ${APP_NAME}
