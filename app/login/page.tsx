@@ -1,38 +1,15 @@
-import { Suspense } from "react";
-import Link from "next/link";
+import { redirect } from "next/navigation";
 
-import { LoginForm } from "@/components/login-form";
-import { SiteHeader } from "@/components/site-header";
-import { getSiteConfig } from "@/config/site.config";
+import { getServerEnv } from "@/config/env";
+
+/**
+ * muzhi 的 /login 已并入 auth SSO。
+ * 登录走 auth.zmzai.cloud，登录后 cookie 父域共享，muzhi 直接识别登录态。
+ * 注册/找回密码/邮箱验证仍在 muzhi 自己处理（auth 只做登录）。
+ */
+const AUTH_URL =
+  getServerEnv().AUTH_SSO_URL ?? "https://auth.zmzai.cloud";
 
 export default function LoginPage() {
-  const site = getSiteConfig();
-
-  return (
-    <>
-      <SiteHeader site={site} />
-      <main className="page-shell py-16">
-        <div className="mx-auto max-w-md">
-          <h1 className="text-4xl font-semibold tracking-[-0.045em]">登录</h1>
-          <p className="mt-3 text-[var(--muted)]">
-            管理员与已完成邮箱验证的普通用户都从这里登录。
-          </p>
-          <Suspense fallback={null}>
-            <LoginForm />
-          </Suspense>
-          <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm">
-            <Link className="font-semibold text-[var(--accent-readable)] underline underline-offset-4" href="/register">
-              注册账号
-            </Link>
-            <Link className="font-semibold text-[var(--accent-readable)] underline underline-offset-4" href="/forgot-password">
-              找回密码
-            </Link>
-            <Link className="font-semibold text-[var(--accent-readable)] underline underline-offset-4" href="/resend-verification">
-              重发验证邮件
-            </Link>
-          </div>
-        </div>
-      </main>
-    </>
-  );
+  redirect(`${AUTH_URL}/login?next=${encodeURIComponent("https://muzhi.zmzai.cloud")}`);
 }

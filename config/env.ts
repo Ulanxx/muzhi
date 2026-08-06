@@ -30,6 +30,8 @@ const envSchema = z
       .min(1)
       .default("mongodb://localhost:27017/muzhi_knowledge"),
     AUTH_SECRET: z.string().optional(),
+    /** SSO 认证中心地址，muzhi 登录跳转到这里 */
+    AUTH_SSO_URL: z.string().url().optional(),
     SESSION_COOKIE_NAME: z
       .string()
       .regex(/^[a-zA-Z0-9_-]+$/)
