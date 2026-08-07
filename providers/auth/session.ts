@@ -5,11 +5,11 @@ import { cookies } from "next/headers";
 import { getServerEnv, requireAuthSecret } from "@/config/env";
 import type { UserAccount } from "@/modules/identity";
 import { connectMongo } from "@/providers/database/mongodb/connection";
-import { SessionModel } from "@/providers/database/mongodb/models/session";
 import {
+  SessionModel,
   UserModel,
   type UserDocument,
-} from "@/providers/database/mongodb/models/user";
+} from "@zmzai/db";
 
 function hashToken(token: string): string {
   const secret = requireAuthSecret();

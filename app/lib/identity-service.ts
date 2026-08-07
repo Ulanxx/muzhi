@@ -16,11 +16,11 @@ import {
   IdentityTokenModel,
   type IdentityTokenPurpose,
 } from "@/providers/database/mongodb/models/identity-token";
-import { SessionModel } from "@/providers/database/mongodb/models/session";
 import {
+  SessionModel,
   UserModel,
   type UserDocument,
-} from "@/providers/database/mongodb/models/user";
+} from "@zmzai/db";
 import { getEmailProvider } from "@/providers/email";
 
 function tokenExpiry(purpose: IdentityTokenPurpose): Date {

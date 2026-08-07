@@ -9,7 +9,7 @@ import {
 import { emailSchema } from "@/modules/identity/credentials";
 import { createSession } from "@/providers/auth/session";
 import { connectMongo } from "@/providers/database/mongodb/connection";
-import { UserModel } from "@/providers/database/mongodb/models/user";
+import { UserModel } from "@zmzai/db";
 import {
   clearRateLimit,
   consumeRateLimit,

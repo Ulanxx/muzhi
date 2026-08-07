@@ -10,7 +10,7 @@ import {
 import { entitlementTypes } from "@/modules/entitlement";
 import { connectMongo } from "@/providers/database/mongodb/connection";
 import { InvitationModel } from "@/providers/database/mongodb/models/invitation";
-import { UserModel } from "@/providers/database/mongodb/models/user";
+import { UserModel } from "@zmzai/db";
 
 loadEnvConfig(process.cwd());
 

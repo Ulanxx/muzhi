@@ -6,7 +6,7 @@ import {
   OrderItemModel,
   OrderModel,
 } from "@/providers/database/mongodb/models/commerce";
-import { UserModel } from "@/providers/database/mongodb/models/user";
+import { UserModel } from "@zmzai/db";
 
 export const dynamic = "force-dynamic";
 
