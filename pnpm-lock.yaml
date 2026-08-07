@@ -24,8 +24,8 @@ importers:
         specifier: ^2.0.14
         version: 2.0.14
       '@zmzai/db':
-        specifier: git+https://github.com/Ulanxx/zmzai-db.git
-        version: git+https://git@github.com:Ulanxx/zmzai-db.git#54b495dbe8cb642bc2d1b233f4ee13902e15a2d4(mongoose@8.24.1)
+        specifier: github:Ulanxx/zmzai-db
+        version: https://codeload.github.com/Ulanxx/zmzai-db/tar.gz/54b495dbe8cb642bc2d1b233f4ee13902e15a2d4(mongoose@8.24.1)
       ali-oss:
         specifier: ^6.23.0
         version: 6.23.0
@@ -1113,8 +1113,8 @@ packages:
   '@vitest/utils@4.1.10':
     resolution: {integrity: sha512-fy9am/HWxbaGt/Sawrp90vt6Y6jQwf1RX77cz3uwoJwJVMli/e1IEwRPnMNJ7vKfPTwo0diXifkpPvwH9v7nGA==}
 
-  '@zmzai/db@git+https://git@github.com:Ulanxx/zmzai-db.git#54b495dbe8cb642bc2d1b233f4ee13902e15a2d4':
-    resolution: {commit: 54b495dbe8cb642bc2d1b233f4ee13902e15a2d4, repo: git@github.com:Ulanxx/zmzai-db.git, type: git}
+  '@zmzai/db@https://codeload.github.com/Ulanxx/zmzai-db/tar.gz/54b495dbe8cb642bc2d1b233f4ee13902e15a2d4':
+    resolution: {gitHosted: true, integrity: sha512-lzo5B2XFM2rQfbEMX91hfx//UcKnUVnm6c2z83GuCUjbrp68QZ/hk1QcxyVewmrPtgxphkJcO5GFna/Q59oktA==, tarball: https://codeload.github.com/Ulanxx/zmzai-db/tar.gz/54b495dbe8cb642bc2d1b233f4ee13902e15a2d4}
     version: 0.1.0
     peerDependencies:
       mongoose: ^8.24.0
@@ -4077,7 +4077,7 @@ snapshots:
       convert-source-map: 2.0.0
       tinyrainbow: 3.1.1
 
-  '@zmzai/db@git+https://git@github.com:Ulanxx/zmzai-db.git#54b495dbe8cb642bc2d1b233f4ee13902e15a2d4(mongoose@8.24.1)':
+  '@zmzai/db@https://codeload.github.com/Ulanxx/zmzai-db/tar.gz/54b495dbe8cb642bc2d1b233f4ee13902e15a2d4(mongoose@8.24.1)':
     dependencies:
       mongoose: 8.24.1
 
