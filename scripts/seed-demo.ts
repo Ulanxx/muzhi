@@ -16,7 +16,7 @@ import {
   CourseModel,
   SeriesModel,
 } from "@/providers/database/mongodb/models/series";
-import { UserModel } from "@/providers/database/mongodb/models/user";
+import { UserModel } from "@zmzai/db";
 import { getStorageProvider } from "@/providers/storage";
 
 loadEnvConfig(process.cwd());

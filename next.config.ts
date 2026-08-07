@@ -43,6 +43,8 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   serverExternalPackages: ["ali-oss"],
+  // 私有 TS 包，需显式转译
+  transpilePackages: ["@zmzai/db"],
   pageExtensions: ["ts", "tsx", "mdx"],
   async headers() {
     return [

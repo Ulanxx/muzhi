@@ -22,7 +22,7 @@ import {
   CourseModel,
   SeriesModel,
 } from "@/providers/database/mongodb/models/series";
-import { UserModel } from "@/providers/database/mongodb/models/user";
+import { UserModel } from "@zmzai/db";
 import { getErrorReporter } from "@/providers/observability";
 import { consoleErrorReporter } from "@/providers/observability/console";
 import { getProviderReadiness } from "@/providers/readiness";
