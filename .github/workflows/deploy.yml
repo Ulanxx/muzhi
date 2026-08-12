@@ -20,9 +20,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # 固定 pnpm 10.34.5 与服务器一致：pnpm 11 会把被忽略的构建脚本
+      # (ERR_PNPM_IGNORED_BUILDS) 当硬错误，pnpm 10 只是警告（各仓库
+      # pnpm-workspace.yaml 的 allowBuilds 是 sharp:false/占位符，生产不跑该脚本）
       - uses: pnpm/action-setup@v4
         with:
-          version: 11.5.0
+          version: 10.34.5
 
       - uses: actions/setup-node@v4
         with:
