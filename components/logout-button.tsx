@@ -20,7 +20,7 @@ export function LogoutButton() {
 
   return (
     <button
-      className="focus-ring whitespace-nowrap border-b-2 border-transparent pb-0.5 text-sm font-medium transition-colors hover:border-[var(--ink)] disabled:opacity-50"
+      className="focus-ring whitespace-nowrap rounded-full px-3 py-1.5 text-sm font-medium text-ink-2 transition-colors hover:bg-surface-2 hover:text-ink disabled:opacity-50"
       disabled={pending}
       onClick={() => void logout()}
       type="button"

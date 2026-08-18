@@ -23,7 +23,8 @@ const securityHeaders = [
       }`,
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: blob:",
-      "font-src 'self'",
+      // MiSans 主字体走 jsDelivr CDN（见 globals.css @font-face）
+      "font-src 'self' https://cdn.jsdelivr.net",
       "connect-src 'self' https:",
       "media-src 'self' blob: https:",
     ].join("; "),
@@ -44,7 +45,14 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   serverExternalPackages: ["ali-oss"],
   // 私有 TS 包，需显式转译
-  transpilePackages: ["@zmzai/db"],
+  transpilePackages: ["@zmzai/db", "@zmzai/theme"],
+  // NodeNext 后缀映射：theme 源码直发（.ts/.tsx 以 .js 说明符互引）
+  webpack: (config) => {
+    config.resolve.extensionAlias = {
+      ".js": [".ts", ".tsx", ".js"],
+    };
+    return config;
+  },
   pageExtensions: ["ts", "tsx", "mdx"],
   async headers() {
     return [

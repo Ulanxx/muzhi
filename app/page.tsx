@@ -1,7 +1,8 @@
 import Link from "next/link";
 import type { Types } from "mongoose";
 
-import { Seal } from "@/components/seal";
+import { Logo } from "@zmzai/theme";
+
 import { SiteHeader } from "@/components/site-header";
 import { productsConfig } from "@/config/products.config";
 import { getSiteConfig } from "@/config/site.config";
@@ -240,7 +241,7 @@ export default async function HomePage() {
       <footer className="rule-top py-10">
         <div className="page-shell flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div className="flex flex-col gap-3">
-            <Seal size={56} />
+            <Logo size={40} />
             <p className="font-mono text-xs text-[var(--muted)]">
               {site.name}
               <br />

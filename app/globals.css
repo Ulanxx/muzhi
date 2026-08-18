@@ -1,51 +1,92 @@
 @import "tailwindcss";
 
-/* zmzai cloud 牧之 — 印章 + 手作纸。
-   暖浆纸底、暖墨字、印泥红强调。不跟随系统深色——印刷品没有深色版。
-   配色源锁定见 zmzai-cloud/design.md（Hallmark Study）。 */
+/* theme 组件源码参与 Tailwind 扫描（消费端三件套之二） */
+@source "../node_modules/@zmzai/theme/src/**/*.{ts,tsx}";
+
+/* zmzai 牧之 — 与 hub 等 6 站统一：纯白纸底 + 荧光绿 accent + MiSans。
+   不跟随系统深色——印刷品没有深色版。 */
+
+/* MiSans @font-face（主字体，jsDelivr CDN；CSP font-src 已放行） */
+@font-face {
+  font-family: 'MiSans';
+  src: url('https://cdn.jsdelivr.net/gh/dsrkafuu/misans@main/raw/Normal/woff2/MiSans-Regular.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'MiSans';
+  src: url('https://cdn.jsdelivr.net/gh/dsrkafuu/misans@main/raw/Normal/woff2/MiSans-Medium.woff2') format('woff2');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'MiSans';
+  src: url('https://cdn.jsdelivr.net/gh/dsrkafuu/misans@main/raw/Normal/woff2/MiSans-Semibold.woff2') format('woff2');
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'MiSans';
+  src: url('https://cdn.jsdelivr.net/gh/dsrkafuu/misans@main/raw/Normal/woff2/MiSans-Bold.woff2') format('woff2');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
 
 /* @theme inline：把裸 token 暴露成 Tailwind v4 工具类（bg-ink / text-accent 等），
-   同时保留下方 :root 的裸名变量，让现有 var(--xxx) 用法零改动继承新色。 */
+   同时保留下方 :root 的裸名变量，让现有 var(--xxx) 用法零改动继承新色。
+   命名同时覆盖站内旧名（page/muted）与 @zmzai/theme 组件期望的别名
+   （bg/ink-2/ink-3/surface-2/line-strong）。 */
 @theme inline {
   --color-page: var(--page);
+  --color-bg: var(--page);
+  --color-paper: var(--page);
   --color-surface: var(--surface);
+  --color-surface-2: var(--surface-strong);
   --color-surface-strong: var(--surface-strong);
   --color-ink: var(--ink);
+  --color-ink-2: var(--muted);
+  --color-ink-3: var(--muted);
   --color-muted: var(--muted);
   --color-line: var(--line);
+  --color-line-strong: var(--rule);
   --color-rule: var(--rule);
   --color-accent: var(--accent);
   --color-accent-strong: var(--accent-strong);
   --color-accent-ink: var(--accent-ink);
   --color-success: var(--success);
+  --color-danger: var(--danger);
+  --color-warning: var(--warning);
 
-  --font-sans: var(--font-serif), "PingFang SC", "Hiragino Sans GB",
-    "Microsoft YaHei", system-ui, serif;
-  --font-serif: var(--font-serif), "Source Han Serif SC", "Songti SC", serif;
+  --font-sans: "MiSans", "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", system-ui, sans-serif;
+  --font-serif: "Songti SC", "Source Han Serif SC", serif;
   --font-mono: var(--font-mono), ui-monospace, "SFMono-Regular", monospace;
 
+  --radius-sm: 2px;
+  --radius: 2px;
+  --radius-lg: 4px;
+  --radius-xl: 6px;
+  --radius-pill: 9999px;
   --radius-card: 2px;
   --radius-input: 0px;
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 :root {
   color-scheme: light;
-  /* 暖浆纸底，比纯白有「浆」感；暖墨非纯黑，避免 AI 廉价对比。 */
-  --page: oklch(0.95 0.012 85);
-  --surface: oklch(0.97 0.008 85);
-  --surface-strong: oklch(0.92 0.014 80);
-  --ink: oklch(0.18 0.011 40);
-  --muted: oklch(0.47 0.013 55);
-  --line: oklch(0.86 0.012 80);
-  --rule: oklch(0.18 0.011 40);
-  /* 印泥红替代荧光绿——暖、有出处、不属于 AI 默认色板。 */
-  --accent: oklch(0.46 0.15 27);
-  --accent-strong: oklch(0.39 0.15 27);
-  --accent-ink: oklch(0.97 0.008 85);
-  /* 印泥红本身可读，不再需要荧光绿配的深橄榄色；保留变量名兼容 18 处用法。 */
-  --accent-readable: oklch(0.39 0.15 27);
-  --success: oklch(0.52 0.09 160);
-  --shadow: oklch(0.18 0.011 40 / 0.08);
+  /* 纯白 + 荧光绿 —— 与 hub / auth / relay / agent / sandbox / workos 同款。 */
+  --page: oklch(0.995 0.002 90);
+  --surface: oklch(0.98 0.004 90);
+  --surface-strong: oklch(0.95 0.006 88);
+  --ink: oklch(0.15 0.010 30);
+  --muted: oklch(0.50 0.012 55);
+  --line: oklch(0.90 0.005 88);
+  --rule: oklch(0.15 0.010 30);
+  --accent: oklch(0.78 0.220 142);
+  --accent-strong: oklch(0.68 0.220 142);
+  --accent-ink: oklch(0.15 0.010 30);
+  /* 正文里可读的强调色：荧光绿在白底上太浅，文字用这个深一档。 */
+  --accent-readable: oklch(0.55 0.170 145);
+  --success: oklch(0.72 0.180 145);
+  --danger: oklch(0.55 0.200 25);
+  --warning: oklch(0.80 0.150 90);
+  --shadow: oklch(0.15 0.010 30 / 0.08);
 }
 
 /* 基础元素样式必须放进 @layer base：无 layer 的 CSS 会压过 Tailwind
@@ -64,8 +105,8 @@
     margin: 0;
     background: var(--page);
     color: var(--ink);
-    font-family: var(--font-serif), "PingFang SC", "Hiragino Sans GB",
-      "Microsoft YaHei", system-ui, serif;
+    font-family: "MiSans", "PingFang SC", "Hiragino Sans GB",
+      "Microsoft YaHei", system-ui, sans-serif;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
   }
@@ -77,7 +118,7 @@
 
   ::selection {
     background: var(--accent);
-    color: var(--ink);
+    color: var(--accent-ink);
   }
 }
 

@@ -1,16 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Noto_Serif_SC, JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 
 import { getSiteConfig } from "@/config/site.config";
 
 import "./globals.css";
-
-const serif = Noto_Serif_SC({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-serif",
-  display: "swap",
-});
 
 const mono = JetBrains_Mono({
   subsets: ["latin"],
@@ -41,7 +34,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#F4EFE6",
+  themeColor: "#FFFFFF",
 };
 
 export default function RootLayout({
@@ -50,7 +43,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang={site.locale} className={`${serif.variable} ${mono.variable}`}>
+    <html lang={site.locale} className={mono.variable}>
       <body>{children}</body>
     </html>
   );

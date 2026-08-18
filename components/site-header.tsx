@@ -1,84 +1,77 @@
 import Link from "next/link";
 
+import { Navbar } from "@zmzai/theme";
+
 import { LogoutButton } from "@/components/logout-button";
-import { Wordmark } from "@/components/wordmark";
 import type { SiteConfig } from "@/modules/site";
 import { getCurrentUser } from "@/providers/auth/session";
 
+/* theme navItemClass(false) 同款 pill（navItemClass 是 client 导出，
+   server 组件里不能调用，只能内联；muzhi 导航无 active 态） */
+const navLinkClass =
+  "inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium text-ink-2 transition-colors hover:bg-surface-2 hover:text-ink";
+
+/**
+ * SiteHeader — 全域统一顶栏（theme Navbar）。
+ *
+ * 本组件是 server component：登录态在服务端取，登录/订单/后台等条件
+ * 渲染好的 JSX 作为 children/actions 传入 client 的 Navbar。
+ */
 export async function SiteHeader({ site }: { site: SiteConfig }) {
   const user = await getCurrentUser().catch(() => null);
 
   return (
-    <header className="sticky top-0 z-50 border-b-2 border-[var(--rule)] bg-[var(--page)]">
-      <div className="page-shell flex h-16 items-center justify-between gap-6">
-        <Link className="focus-ring flex min-w-0 items-center gap-2.5" href="/">
-          <Wordmark />
-          <span
-            aria-hidden="true"
-            className="hidden text-sm font-bold tracking-[-0.01em] text-[var(--muted)] sm:inline"
-          >
-            {site.name}
-          </span>
-        </Link>
-
-        <nav
-          aria-label="主导航"
-          className="flex items-center gap-6 text-sm font-medium"
-        >
+    <Navbar
+      sublabel="muzhi"
+      brandHref="/"
+      badge={
+        <span className="rounded-full border border-line px-2 py-0.5 font-mono text-[11px] text-ink-3">
+          {site.name}
+        </span>
+      }
+      actions={
+        user === null ? (
           <Link
-            className="focus-ring transition-colors hover:text-[var(--muted)]"
-            href="/courses"
+            className="rounded-full bg-ink px-4 py-1.5 text-sm font-medium text-paper transition-colors hover:bg-ink/85"
+            href="/login"
           >
-            课程
+            登录
           </Link>
-          <Link
-            className="focus-ring transition-colors hover:text-[var(--muted)]"
-            href="/blog"
-          >
-            博客
-          </Link>
-          <Link
-            className="focus-ring hidden transition-colors hover:text-[var(--muted)] sm:block"
-            href="/pricing"
-          >
-            价格
-          </Link>
-
-          {user === null ? (
+        ) : (
+          <>
             <Link
-              className="focus-ring whitespace-nowrap bg-[var(--ink)] px-4 py-2 text-sm font-bold text-[var(--page)] transition-colors hover:bg-[var(--muted)]"
-              href="/login"
+              className="hidden max-w-[10rem] truncate text-sm font-medium text-ink-2 transition-colors hover:text-ink md:block"
+              href="/account/security"
+              title={user.email}
             >
-              登录
+              {user.name}
             </Link>
-          ) : (
-            <>
-              <Link
-                className="focus-ring hidden transition-colors hover:text-[var(--muted)] md:block"
-                href="/account/orders"
-              >
-                订单
-              </Link>
-              {user.role === "admin" ? (
-                <Link
-                  className="focus-ring hidden transition-colors hover:text-[var(--muted)] md:block"
-                  href="/admin"
-                >
-                  后台
-                </Link>
-              ) : null}
-              <Link
-                className="focus-ring hidden max-w-[10rem] truncate font-bold md:block"
-                href="/account/security"
-                title={user.email}
-              >
-                {user.name}
-              </Link>
-              <LogoutButton />
-            </>
-          )}
-        </nav>
-      </div>
-    </header>
+            <LogoutButton />
+          </>
+        )
+      }
+    >
+      <Link className={navLinkClass} href="/courses">
+        课程
+      </Link>
+      <Link className={navLinkClass} href="/blog">
+        博客
+      </Link>
+      <Link className={navLinkClass} href="/pricing">
+        价格
+      </Link>
+      {user !== null ? (
+        <>
+          <Link className={navLinkClass} href="/account/orders">
+            订单
+          </Link>
+          {user.role === "admin" ? (
+            <Link className={navLinkClass} href="/admin">
+              后台
+            </Link>
+          ) : null}
+        </>
+      ) : null}
+    </Navbar>
   );
 }
