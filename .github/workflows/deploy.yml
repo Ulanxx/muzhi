@@ -32,6 +32,12 @@ jobs:
           node-version: 22
           cache: pnpm
 
+      # corepack 本地跑 install 会自动写回 package.json packageManager 字段，
+      # 与 action-setup 固定 version 冲突（Multiple versions of pnpm）。
+      # 双保险：CI install 前统一剥离。
+      - name: Strip packageManager (corepack auto-pin)
+        run: node -e "const fs=require('fs');const p=JSON.parse(fs.readFileSync('package.json','utf8'));if(p.packageManager){delete p.packageManager;fs.writeFileSync('package.json',JSON.stringify(p,null,2)+'\\n')}"
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
         env:
