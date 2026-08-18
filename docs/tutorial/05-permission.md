@@ -161,7 +161,6 @@ export class RejectedError extends Error {
 export class PermissionEngine {
   private sessionRules: Ruleset = [];                    // always 批准落这里
   private onceAllowed = new Set<string>();               // once 缓存（permission\0pattern）
-  private pending = new Map<string, (reply: Reply) => void>();
 
   constructor(
     private readonly rulesets: Ruleset[],                // 基线 + agent 预设
@@ -281,7 +280,7 @@ const rl = readline.createInterface({ input: process.stdin, output: process.stdo
 const askUser = async (request: PermissionRequest): Promise<Reply> => {
   console.log(`\n⚠️  需要权限：${request.description}`);
   const answer = await rl.question("   [1] 允许一次  [2] 总是允许  [3] 拒绝\n> ");
-  rl.close();
+  // 注意：不要在每次回答后 rl.close()——关掉后后续权限询问会全部报 "readline was closed"
   return answer === "2" ? "always" : answer === "3" ? "reject" : "once";
 };
 

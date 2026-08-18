@@ -110,7 +110,8 @@ running（执行中）  ←─ UI 显示 spinner
 ```bash
 mkdir mini-agent && cd mini-agent
 npm init -y
-npm install typescript tsx @types/node --save-dev
+npm pkg set type=module   # 关键：tsx 跑顶层 await 需要 ESM，npm init 默认是 commonjs
+npm install typescript@5 tsx @types/node --save-dev   # 钉 typescript 5.x（latest 已是原生重写的 7.x，行为有差异）
 npx tsc --init
 ```
 

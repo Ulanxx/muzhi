@@ -228,15 +228,17 @@ await streamChatWithRetry(config, { systemPrompt, messages: finalChatMessages, t
 ```ts
 // demo.ts
 import { compactIfNeeded } from "./compaction.js";
+import type { Message } from "./types.js";
 
-// 模拟一个长历史（20 条消息，每条 3000 字符 ≈ 750 tokens）
+// 模拟一个长历史（20 条消息，每条 12000 字符 ≈ 3000 tokens，共 ≈ 60000 > 阈值 54400）。
+// 注意数据量要够：如果每条只有 3000 字符（≈ 750 tokens），总量才 15000 tokens，远达不到阈值，不会触发压缩
 const longHistory: Message[] = Array.from({ length: 20 }, (_, i) => ({
   id: `msg_${i}`,
   sessionId: "",
   role: i % 2 === 0 ? "user" : "assistant",
   ...(i % 2 === 0
-    ? { content: "x".repeat(3000), createdAt: new Date().toISOString() }
-    : { parts: [{ id: `prt_${i}`, messageId: "", type: "text" as const, text: "y".repeat(3000) }], createdAt: new Date().toISOString() }),
+    ? { content: "x".repeat(12000), createdAt: new Date().toISOString() }
+    : { parts: [{ id: `prt_${i}`, messageId: "", type: "text" as const, text: "y".repeat(12000) }], createdAt: new Date().toISOString() }),
 })) as Message[];
 
 const result = await compactIfNeeded(longHistory, {

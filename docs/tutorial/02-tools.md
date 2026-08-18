@@ -112,8 +112,8 @@ export type ToolResult = {
   metadata?: Record<string, unknown>;  // 附加数据（不喂 LLM）
 };
 
-/** 工具定义 */
-export type ToolDef<TSchema extends z.ZodType = z.ZodType> = {
+/** 工具定义（默认泛型用 z.ZodType<any>，否则 z.output 退化成 unknown，execute 里拿不到参数类型） */
+export type ToolDef<TSchema extends z.ZodType = z.ZodType<any>> = {
   id: string;
   description: string;           // 给 LLM 看的说明
   parameters: TSchema;           // zod schema

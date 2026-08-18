@@ -377,7 +377,6 @@ export async function runAgent(
 ```ts
 // demo.ts
 import { runAgent } from "./loop.js";
-import { renderSession } from "./render.js";
 import type { Part } from "./types.js";
 
 const config = {

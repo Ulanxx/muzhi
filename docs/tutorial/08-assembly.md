@@ -156,7 +156,12 @@ const onPart = async (part: Part) => {
 console.log(`mini-agent 已就绪（模型：${config.model}）。输入 /exit 退出。\n`);
 
 while (true) {
-  const input = await rl.question("mini-agent > ");
+  let input: string;
+  try {
+    input = await rl.question("mini-agent > ");
+  } catch {
+    break;  // stdin EOF（Ctrl-D）时 question 会抛 ERR_USE_AFTER_CLOSE，优雅退出
+  }
   const trimmed = input.trim();
   if (!trimmed) continue;
   if (trimmed === "/exit" || trimmed === "/quit") break;

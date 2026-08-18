@@ -103,6 +103,7 @@ export class EventLog {
     const seq = list.length + 1;  // per-session 单调递增
     const persisted: PersistedEvent = {
       ...event,
+      seq,   // 关键：用算出的 seq 覆盖调用方传入的占位值，否则所有事件 seq 相同，订阅永远收不到
       id: `evt_${Math.random().toString(36).slice(2, 10)}`,
       sessionId,
       at: new Date().toISOString(),
@@ -163,10 +164,13 @@ export async function* subscribe(
         if (e.seq <= cursor) continue;
         queue.push(e);
       }
-      // 2. 按 seq 排序后逐条 yield
+      // 2. 按 seq 排序后逐条 yield。
+      // 注意：遇到 seq <= cursor 的（重复/过期）要丢弃而不是停摆——
+      // live 推送和回放可能重复进 queue，停摆会让队头旧事件永远堵住后面的新事件
       queue.sort((a, b) => a.seq - b.seq);
-      while (queue.length && queue[0]!.seq > cursor) {
+      while (queue.length) {
         const event = queue.shift()!;
+        if (event.seq <= cursor) continue;
         cursor = event.seq;
         yield event;
       }
@@ -202,7 +206,7 @@ export function notify(event: PersistedEvent): void {
 
 ```ts
 // store.ts
-import type { Message, Session } from "./types.js";
+import type { Message, Part, Session } from "./types.js";
 
 /** 会话存储（抽象。内存版如下，生产换 Mongo/JSONL） */
 export class SessionStore {
@@ -247,12 +251,13 @@ const engine = new PermissionEngine([baselineRules], async () => "once");
 
 const config = { baseUrl: "...", apiKey: process.env.API_KEY!, model: "deepseek-chat" };
 
-// 后台订阅事件流，实时打印
+// 后台订阅事件流，实时打印（用 AbortController，agent 跑完后停掉订阅，否则轮询会让进程不退出）
+const controller = new AbortController();
 const session = { id: "ses_demo", title: "读文件", model: { providerId: "x", modelId: "x" }, createdAt: new Date().toISOString() };
 await log.append(session.id, { type: "session.created", seq: 0, session });
 
-(async () => {
-  for await (const event of subscribe(log, session.id)) {
+const sub = (async () => {
+  for await (const event of subscribe(log, session.id, { signal: controller.signal })) {
     console.log(`[evt ${event.seq}] ${event.type}`, "status" in event ? (event as any).status ?? (event as any).part?.tool ?? "" : "");
   }
 })();
@@ -265,6 +270,9 @@ await runAgent([], "读 package.json", {
     notify(persisted);  // 推给 live 订阅者
   },
 });
+
+controller.abort();
+await sub;
 ```
 
 你会看到事件按 seq 顺序实时打印。模拟断线：把 `subscribe` 的 `sinceSeq` 设成 3（跳过前 3 条），你会看到它先补齐 4+，再继续。
