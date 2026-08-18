@@ -55,7 +55,6 @@
 
   --font-sans: "MiSans", "PingFang SC", "Hiragino Sans GB",
     "Microsoft YaHei", system-ui, sans-serif;
-  --font-serif: "Songti SC", "Source Han Serif SC", serif;
   --font-mono: var(--font-mono), ui-monospace, "SFMono-Regular", monospace;
 
   --radius-sm: 2px;

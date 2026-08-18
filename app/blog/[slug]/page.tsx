@@ -85,7 +85,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             {post.summary}
           </p>
 
-          <div className="prose-magazine mt-12">
+          <div className="mt-12">
             <PostContent />
           </div>
         </article>

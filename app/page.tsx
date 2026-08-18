@@ -109,7 +109,7 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* 课程：杂志文章式条目，大编号 + 标题 + 导读，不用圆角卡片 */}
+        {/* 课程：文章式条目，大编号 + 标题 + 导读，不用圆角卡片 */}
         <section className="rule-top bg-[var(--surface)] py-20" id="courses">
           <div className="page-shell">
             <div className="flex flex-wrap items-end justify-between gap-6">

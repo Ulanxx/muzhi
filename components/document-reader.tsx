@@ -210,7 +210,7 @@ export function DocumentReader({
             ) : loading ? (
               <p className="mt-8 text-[var(--muted)]">正在加载正文…</p>
             ) : activeBody !== null ? (
-              <div className="prose-magazine mt-8">
+              <div className="mt-8">
                 <ChapterMarkdown body={activeBody} />
               </div>
             ) : (
@@ -257,7 +257,7 @@ export function DocumentReader({
   );
 }
 
-/** 极简 Markdown 渲染：标题/加粗/代码块/列表/引用/段落，与全站杂志排版一致。 */
+/** 极简 Markdown 渲染：标题/加粗/代码块/列表/引用/段落，与全站排版一致。 */
 function ChapterMarkdown({ body }: { body: string }) {
   const blocks = body.split(/\n{2,}/);
   return (
