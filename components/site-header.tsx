@@ -24,8 +24,9 @@ export async function SiteHeader({ site }: { site: SiteConfig }) {
     <Navbar
       sublabel="muzhi"
       brandHref="/"
+      mobileMenu
       badge={
-        <span className="rounded-full border border-line px-2 py-0.5 font-mono text-[11px] text-ink-3">
+        <span className="hidden rounded-full border border-line px-2 py-0.5 font-mono text-[11px] text-ink-3 sm:inline">
           {site.name}
         </span>
       }

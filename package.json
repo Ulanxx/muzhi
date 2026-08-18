@@ -27,7 +27,7 @@
     "@next/mdx": "^16.2.12",
     "@types/mdx": "^2.0.14",
     "@zmzai/db": "github:Ulanxx/zmzai-db",
-    "@zmzai/theme": "0.5.3",
+    "@zmzai/theme": "0.5.4",
     "ali-oss": "^6.23.0",
     "bcryptjs": "3.0.3",
     "gray-matter": "^4.0.3",
