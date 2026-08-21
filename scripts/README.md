@@ -5,6 +5,7 @@
 - `create-admin`：受控创建首个管理员；
 - `create-invitation`：创建会员、单课或系列权益邀请码；
 - `seed-demo`：导入虚构示例课程和双模式商品；
+- `seed-agent-course` / `seed-agent-course-advanced` / `seed-harness-course`：把 `docs/tutorial*` 三部曲教程入库（幂等）；生产库在 HK 主机本机，需先起隧道：`ssh -f -N -L 27917:127.0.0.1:27017 root@<HK_HOST>`，再 `MONGODB_URI='mongodb://127.0.0.1:27917/muzhi_production?directConnection=true' npx tsx scripts/seed-harness-course.ts`；
 - `sync-products`：把服务端商品配置同步到 MongoDB；
 - `check-config`：启动前检查配置；
 - 数据备份与恢复当前使用 Atlas 或 MongoDB Database Tools，见 `docs/BACKUP_AND_RECOVERY.md`。
