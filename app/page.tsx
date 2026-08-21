@@ -4,6 +4,8 @@ import type { Types } from "mongoose";
 import { Logo } from "@zmzai/theme";
 
 import { SiteHeader } from "@/components/site-header";
+import { CountUp } from "@/components/count-up";
+import { RollingWord } from "@/components/rolling-word";
 import { productsConfig } from "@/config/products.config";
 import { getSiteConfig } from "@/config/site.config";
 import { listRecentPosts } from "@/modules/blog";
@@ -52,51 +54,61 @@ export default async function HomePage() {
     <>
       <SiteHeader site={site} />
       <main>
-        {/* 头版：超大标题压满版心，右栏是编辑元数据而非运行时参数 */}
+        {/* 头版：超大标题压满版心；eyebrow + 副文案第一句 + 右栏「形式」
+            三处同时点明「这是牧之的付费 AI 视频课」，解决「不知道干啥」 */}
         <section className="page-shell pb-24 pt-20 lg:pb-32 lg:pt-28">
-          <p className="eyebrow text-[var(--muted)]">
-            零基础 · AI 实操 · zmzai cloud 牧之 出品
+          <p className="eyebrow text-[var(--muted)] hero-rise d1">
+            牧之主讲 · AI 实操视频课
           </p>
 
-          <h1 className="headline mt-8 text-[clamp(3.5rem,11vw,10rem)]">
+          <h1 className="headline mt-8 text-[clamp(3.5rem,11vw,10rem)] hero-rise d2">
             从零开始
             <br />
-            把 <span className="inline-block bg-[var(--accent)] px-3 text-[var(--accent-ink)]">AI</span> 用起来
+            把{" "}
+            <span className="ai-glow inline-block bg-[var(--accent)] px-3 text-[var(--accent-ink)]">
+              AI
+            </span>{" "}
+            <RollingWord />
           </h1>
 
           <div className="mt-16 grid gap-12 border-t-2 border-[var(--rule)] pt-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
             <div>
-              <p className="max-w-[40rem] text-2xl leading-10 sm:text-3xl sm:leading-[3rem]">
-                给完全没有技术背景的人，一套能从头跟着做完的 AI
-                学习路径。不讲空理论，每节课结束你都有一个能用的东西。
+              <p className="max-w-[40rem] text-lg leading-8 sm:text-xl sm:leading-9 hero-rise d3">
+                这是一套给零基础同学的在线 AI 课程：不堆概念、不考理论，跟着视频一节一节做，结课你手里就多一个能用的东西。
               </p>
-              <div className="mt-10 flex flex-wrap items-center gap-5">
+              <div className="mt-10 flex flex-wrap items-center gap-5 hero-rise d4">
                 <Link
-                  className="focus-ring bg-[var(--ink)] px-8 py-4 text-base font-bold text-[var(--page)] transition-colors hover:bg-[var(--muted)]"
+                  className="focus-ring bg-[var(--ink)] px-8 py-4 text-base font-bold text-[var(--page)] transition-[transform,colors] hover:-translate-y-0.5 hover:bg-[var(--muted)]"
                   href="/courses"
                 >
-                  开始学习
+                  免费试看课程
                 </Link>
                 <Link
                   className="focus-ring border-b-2 border-[var(--ink)] pb-1 text-base font-bold"
                   href="/pricing"
                 >
-                  看价格
+                  了解会员方案
                 </Link>
               </div>
             </div>
 
-            <dl className="grid grid-cols-2 gap-y-8 self-start border-l-0 lg:border-l lg:border-[var(--line)] lg:pl-10">
+            <dl className="grid grid-cols-2 gap-y-8 self-start border-l-0 lg:border-l lg:border-[var(--line)] lg:pl-10 hero-rise d5">
+              <div className="col-span-2">
+                <dt className="eyebrow text-[var(--muted)]">形式</dt>
+                <dd className="mt-2 leading-7">
+                  视频课 + 跟练，随时回看
+                </dd>
+              </div>
               <div>
                 <dt className="eyebrow text-[var(--muted)]">课程数</dt>
                 <dd className="mt-2 text-4xl font-black tabular-nums">
-                  {courses.length}
+                  <CountUp value={courses.length} delay={700} />
                 </dd>
               </div>
               <div>
                 <dt className="eyebrow text-[var(--muted)]">付费方式</dt>
                 <dd className="mt-2 text-4xl font-black tabular-nums">
-                  {productsConfig.length}
+                  <CountUp value={productsConfig.length} delay={700} />
                 </dd>
               </div>
               <div className="col-span-2">
